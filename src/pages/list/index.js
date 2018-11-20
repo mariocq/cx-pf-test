@@ -1,5 +1,7 @@
 import { connect } from 'dva';
 import ProductList from '../../components/ProductList';
+import SearchBar from './search';
+import styles from './index.css';
 
 const Products = ({ dispatch, products }) => {
   function handleDelete(id) {
@@ -10,7 +12,8 @@ const Products = ({ dispatch, products }) => {
   }
   return (
     <div>
-      <h2>List of Products</h2>
+      <h2>采集图像集合</h2>
+      <SearchBar />
       <ProductList onDelete={handleDelete} products={products} />
     </div>
   );

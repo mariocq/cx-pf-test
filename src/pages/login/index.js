@@ -1,7 +1,7 @@
-import { Button, Checkbox, Form, Icon, Input } from 'antd';
-import styles from './index.css';
+import { Button, Form, Icon, Input } from 'antd';
 import { connect } from 'dva';
 import router from 'umi/router';
+import styles from './index.css';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
