@@ -6,5 +6,9 @@ export default {
     '/api/users/1': { id: 1 },
   
     // 支持自定义函数，API 参考 express@4 
-    'POST /api/login': { msg: "ok"},
+    'POST /api/login': (req, res) => {
+      setTimeout(() => {
+        res.send({ msg: "ok"});
+      }, 1000);
+    },
   };

@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Icon, Input } from 'antd';
 import styles from './index.css';
 import { connect } from 'dva';
-
+import router from 'umi/router';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
@@ -17,8 +17,16 @@ class LoginForm extends React.Component {
     });
   }
 
+  componentDidUpdate(){
+    const { login } = this.props;
+    if (login) {
+      router.push('/list');
+    }
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { loading } = this.props;
     return (
       <div className={styles.normal}>
         <Form onSubmit={this.handleSubmit} className="login-form">
@@ -37,7 +45,7 @@ class LoginForm extends React.Component {
             )}
           </FormItem>
           <FormItem>
-            <Button type="primary" htmlType="submit" className="login-form-button">
+            <Button loading={loading} type="primary" htmlType="submit" className="login-form-button">
               登录系统
             </Button>
           </FormItem>
@@ -48,5 +56,12 @@ class LoginForm extends React.Component {
 }
 
 const WrappedLoginForm = Form.create()(LoginForm);
+function mapStateToProps(state) {
+  const { login } = state.global;
+  return {
+    login,
+    loading: state.loading.models.global,
+  };
+}
 
-export default connect()(WrappedLoginForm)
+export default connect(mapStateToProps)(WrappedLoginForm)
