@@ -28,12 +28,12 @@ class BasicLayout extends React.Component {
             <div className={styles.logo} />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1">
-                <Icon type="upload" />
-                <span>系统信息</span>
+                <Icon type="video-camera" />
+                <span>实时窗口</span>
               </Menu.Item>
               <Menu.Item key="2">
-                <Icon type="video-camera" />
-                <span>图片操作</span>
+                <Icon type="search" />
+                <span>图片查询</span>
               </Menu.Item>
               <Menu.Item key="3">
                 <Icon type="user" />

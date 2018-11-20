@@ -1,23 +1,26 @@
-import { Table, Popconfirm, Button } from 'antd';
-
+import { Popconfirm, Button } from 'antd';
+import { List, Card } from 'antd';
+import productImg from '../assets/sample.jpeg';
 const ProductList = ({ onDelete, products }) => {
-    const columns = [{
-        title: 'Name',
-        dataIndex: 'name',
-    }, {
-        title: 'Actions',
-        render: (text, record) => {
-            return (
-                <Popconfirm title="Delete?" onConfirm={() => onDelete(record.id)}>
-                    <Button>Delete</Button>
-                </Popconfirm>
-            );
-        },
-    }];
+    let data = [];
+
+    for (let i = 10; i < 36; i++) {
+        data.push({
+            title: 'ID 20181129-1-' + i,
+        });
+    }
+
     return (
-        <Table
-            dataSource={products}
-            columns={columns}
+        <List
+            grid={{ gutter: 16, column: 4 }}
+            dataSource={data}
+            renderItem={item => (
+            <List.Item>
+                <Card title={item.title} extra={<div><a href="#">查看详情</a></div>}>
+                    <img className="productImg" src={productImg} alt=""/>
+                </Card>
+            </List.Item>
+            )}
         />
     );
 };

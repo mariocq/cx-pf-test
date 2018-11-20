@@ -48,8 +48,8 @@ class Component extends React.Component {
                             mode="multiple"
                             style={{ width: 300 }}
                         >
-                            <Option key={1}>未标记</Option>
-                            <Option key={2}>已标记</Option>
+                            <Option key={1}>无标记</Option>
+                            <Option key={2}>有标记</Option>
                         </Select>,
                     )}
                 </FormItem>
