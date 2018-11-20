@@ -1,5 +1,6 @@
 import { Button, Checkbox, Form, Icon, Input } from 'antd';
 import styles from './index.css';
+import { connect } from 'dva';
 
 const FormItem = Form.Item;
 
@@ -8,7 +9,10 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.dispatch({
+          type: 'global/login',
+          payload: values,
+        })
       }
     });
   }
@@ -19,14 +23,14 @@ class LoginForm extends React.Component {
       <div className={styles.normal}>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem>
-            {getFieldDecorator('userName', {
+            {getFieldDecorator('user', {
               rules: [{ required: true, message: 'Please input your username!' }],
             })(
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
             )}
           </FormItem>
           <FormItem>
-            {getFieldDecorator('password', {
+            {getFieldDecorator('pwd', {
               rules: [{ required: true, message: 'Please input your Password!' }],
             })(
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
@@ -45,4 +49,4 @@ class LoginForm extends React.Component {
 
 const WrappedLoginForm = Form.create()(LoginForm);
 
-export default WrappedLoginForm;
+export default connect()(WrappedLoginForm)
