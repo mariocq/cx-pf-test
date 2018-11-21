@@ -11,7 +11,7 @@ export default {
   },
 
   // 历史记录
-  // {token:"xxxxx",token:"xxxxx", "day":"20181102","status":["unmark", "marked"],roll:["20181129-1", "20181129-2"]}
+  // {token:"xxxxx", "day":"20181102", "status":["unmark", "marked"],roll:["20181129-1", "20181129-2"]}
   'POST /api/history': (req, res) => {
     setTimeout(() => {
       res.send(

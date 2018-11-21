@@ -1,7 +1,7 @@
 import { Popconfirm, Button } from 'antd';
 import { List, Card } from 'antd';
 import productImg from '../assets/sample.jpeg';
-const ProductList = ({ onDelete, products }) => {
+const ImageList = ({ handleDetail, imgs }) => {
     let data = [];
 
     for (let i = 10; i < 36; i++) {
@@ -25,4 +25,4 @@ const ProductList = ({ onDelete, products }) => {
     );
 };
 
-export default ProductList;
+export default ImageList;

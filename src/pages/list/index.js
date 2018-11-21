@@ -3,10 +3,10 @@ import ImageList from '../../components/ImageList';
 import SearchBar from './search';
 import styles from './index.less';
 
-const Products = ({ dispatch, imgs }) => {
-  function handleDelete(id) {
+const HistoryList = ({ dispatch, imgs }) => {
+  function handleDetail(id) {
     dispatch({
-      type: 'products/delete',
+      type: 'history/detail',
       payload: id,
     });
   }
@@ -14,11 +14,11 @@ const Products = ({ dispatch, imgs }) => {
     <div>
       <h2>采集图像集合</h2>
       <SearchBar />
-      <ImageList onDelete={handleDelete} imgs={imgs} />
+      <ImageList onDelete={handleDetail} imgs={imgs} />
     </div>
   );
 };
 
 export default connect(({ imgs }) => ({
   imgs,
-}))(Products);
+}))(HistoryList);
