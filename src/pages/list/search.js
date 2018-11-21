@@ -1,6 +1,6 @@
 import { Form, Row, Col, Select, Button, DatePicker } from 'antd';
 
-import styles from './index.css';
+import styles from './index.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
 class Component extends React.Component {

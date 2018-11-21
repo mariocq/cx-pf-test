@@ -1,5 +1,4 @@
 export default {
-    namespace: 'products',
     state: [],
     reducers: {
       'delete'(state, { payload: id }) {

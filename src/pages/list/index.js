@@ -1,9 +1,9 @@
 import { connect } from 'dva';
-import ProductList from '../../components/ProductList';
+import ImageList from '../../components/ImageList';
 import SearchBar from './search';
-import styles from './index.css';
+import styles from './index.less';
 
-const Products = ({ dispatch, products }) => {
+const Products = ({ dispatch, imgs }) => {
   function handleDelete(id) {
     dispatch({
       type: 'products/delete',
@@ -14,11 +14,11 @@ const Products = ({ dispatch, products }) => {
     <div>
       <h2>采集图像集合</h2>
       <SearchBar />
-      <ProductList onDelete={handleDelete} products={products} />
+      <ImageList onDelete={handleDelete} imgs={imgs} />
     </div>
   );
 };
 
-export default connect(({ products }) => ({
-  products,
+export default connect(({ imgs }) => ({
+  imgs,
 }))(Products);
