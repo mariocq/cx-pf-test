@@ -1,4 +1,6 @@
-import styles from './index.css';
+import styles from './index.less';
+import router from 'umi/router';
+
 import { Layout, Menu, Icon } from 'antd';
 const { Header, Sider, Content } = Layout;
 
@@ -27,15 +29,15 @@ class BasicLayout extends React.Component {
           >
             <div className={styles.logo} />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1">
+              <Menu.Item key="1" onClick={() => router.push('/realtime')}>
                 <Icon type="video-camera" />
                 <span>实时窗口</span>
               </Menu.Item>
-              <Menu.Item key="2">
+              <Menu.Item key="2" onClick={() => router.push('/history')}>
                 <Icon type="search" />
                 <span>图片查询</span>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key="3" onClick={() => router.push('/profile')}>
                 <Icon type="user" />
                 <span>用户信息</span>
               </Menu.Item>

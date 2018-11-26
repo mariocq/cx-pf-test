@@ -17,10 +17,10 @@ class LoginForm extends React.Component {
     });
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     const { login } = this.props;
     if (login) {
-      router.push('/list');
+      router.push('/realtime');
     }
   }
 
