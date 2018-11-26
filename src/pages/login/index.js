@@ -1,7 +1,7 @@
 import { Button, Form, Icon, Input } from 'antd';
 import { connect } from 'dva';
 import router from 'umi/router';
-import styles from './index.css';
+import styles from './index.less';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
@@ -29,6 +29,7 @@ class LoginForm extends React.Component {
     const { loading } = this.props;
     return (
       <div className={styles.normal}>
+        <div className={styles.logo}></div>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem>
             {getFieldDecorator('user', {
