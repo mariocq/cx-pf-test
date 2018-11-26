@@ -13,17 +13,29 @@ export default {
         msg,
       };
     },
+    signout(state, { }) {
+      return {
+        ...state,
+        login: false,
+      };
+    },
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const { data } = yield call(usersService.login, payload );
+      const { data } = yield call(usersService.login, payload);
       if (data) {
         // 设置reducer
         yield put({
           type: 'signin',
           payload: data,
         });
-      } 
+      }
+    },
+    *logout({ }, { put }) {
+      // 设置reducer
+      yield put({
+        type: 'signout',
+      });
     },
     *throwError() {
       throw new Error('hi error');

@@ -1,7 +1,9 @@
+import { Icon, Layout, Menu, Modal } from 'antd';
 import styles from './index.less';
 import router from 'umi/router';
-
-import { Layout, Menu, Icon } from 'antd';
+import { connect } from 'dva';
+import LeftMenu from './menu';
+import withRouter from 'umi/withRouter';
 const { Header, Sider, Content } = Layout;
 
 class BasicLayout extends React.Component {
@@ -12,6 +14,20 @@ class BasicLayout extends React.Component {
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
+    });
+  }
+
+  handleLogout = () => {
+    Modal.confirm({
+      title: '您确定退出本系统吗？',
+      content: '点击确定退出',
+      okText: '确定',
+      cancelText: '返回',
+      onOk: () => {
+        this.props.dispatch({
+          type: 'global/logout'
+        })
+      }
     });
   }
 
@@ -41,6 +57,10 @@ class BasicLayout extends React.Component {
                 <Icon type="user" />
                 <span>用户信息</span>
               </Menu.Item>
+              <Menu.Item key="4" onClick={this.handleLogout.bind()}>
+                <Icon type="logout" />
+                <LeftMenu />
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout>
@@ -60,5 +80,4 @@ class BasicLayout extends React.Component {
     );
   }
 }
-
-export default BasicLayout;
+export default withRouter(connect()(BasicLayout));
