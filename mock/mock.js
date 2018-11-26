@@ -49,6 +49,8 @@ export default {
 
   // 获取img详情
   // {token:"xxxxx",imgID:"20181129-1-2"}
+  // markType说明: 边损，边裂，毛刺，塔型、松卷，面包卷
+  // markType取值: edge-loss, edge-crack, burr, tower-type, loose-roll, roll
   'POST /api/detail': (req, res) => {
     setTimeout(() => {
       res.send(
