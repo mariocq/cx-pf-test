@@ -2,6 +2,7 @@ import { Tag, Badge } from 'antd';
 import getMarkCss from "../../utils/markType"
 import styles from './index.less';
 import Sample from "../../assets/sample.jpeg";
+import TimeCount from "./timeCount";
 
 export default function () {
   // edge-loss, edge-crack, burr, tower-type, loose-roll, roll
@@ -13,7 +14,6 @@ export default function () {
       "markPosition": { x: Math.floor(Math.random() * 1200), y: Math.floor(Math.random() * 700) }
     });
   }
-  console.log(list);
   const data = list.map((item, index) => {
     const css = getMarkCss(item.markType);
     const pos = { marginLeft: item.markPosition.x, marginTop: item.markPosition.y }
@@ -37,7 +37,7 @@ export default function () {
           </div>
         </div>
         <div className="right">
-          <span>2018-11-26 15:42:29</span>
+          <TimeCount/>
         </div>
       </div>
 
