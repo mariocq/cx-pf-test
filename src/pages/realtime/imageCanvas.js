@@ -1,26 +1,48 @@
 import { Image, Layer, Line, Stage } from 'react-konva';
-import ReactDom from 'react-dom';
+
 const defaultWidth = 1920;
 const defaultHeight = 1080;
 
+
+
 class ImageCanvas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handelResize = this.handelResize.bind(this);
+  }
   state = {
     image: new window.Image(),
     canvasWidth: 0,
     canvasHeight: 0,
   }
   componentDidMount() {
+    // 图片加载及监听
     this.state.image.src = 'https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg';
     this.state.image.onload = () => {
       this.imageNode.getLayer().batchDraw();
     };
     this.timer = setTimeout(() => {
       // 等待Dom构建
-      const canvasWidth = this.wrapNode.scrollWidth;
-      const canvasHeight = Math.floor(canvasWidth / defaultWidth * defaultHeight);
-      this.setState({ canvasWidth, canvasHeight });
+      this.calcWidth();
     }, 100);
 
+    // resize监听
+    window.addEventListener('resize', this.handelResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handelResize);
+  }
+
+  handelResize() {
+    if (this.wrapNode) {
+      this.calcWidth();
+    }
+  }
+  calcWidth(){
+    const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;
+    const canvasHeight = Math.floor(canvasWidth / defaultWidth * defaultHeight);
+    this.setState({ canvasWidth, canvasHeight });
   }
 
   componentWillUnmount() {
