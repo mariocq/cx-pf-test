@@ -37,7 +37,7 @@ export default function () {
       </div>
 
       <div className={styles.detail}>
-        <div className={`${styles["detail-wrap"]} left`}>
+        <div className={`${styles["detail-wrap"]}`}>
           <ImageCanvas />
         </div>
       </div>
