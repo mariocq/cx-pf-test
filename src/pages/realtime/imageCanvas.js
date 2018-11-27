@@ -1,44 +1,41 @@
-import Konva from 'konva';
-import { Stage, Layer, Image, Line } from 'react-konva';
-import Sample from "../../assets/sample.jpeg";
+import { Image, Layer, Line, Stage } from 'react-konva';
 
-
-class Component extends React.Component {
+class ImageCanvas extends React.Component {
   state = {
-    image: null
+    image: new window.Image()
   }
   componentDidMount() {
-    const image = new window.Image();
-    // image.src = {Sample};
-    image.src = "https://konvajs.github.io/assets/yoda.jpg";
-    console.log(Sample);
-    console.log(image);
-
-    image.onload = () => {
-      // setState will redraw layer
-      // because "image" property is changed
-      this.setState({
-        image: image
-      });
+    this.state.image.src = 'https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg';
+    this.state.image.onload = () => {
+      this.imageNode.getLayer().batchDraw();
     };
+  }
+
+  componentWillUnmount() {
+    const { image } = this.state;
+    if (image) {
+      image.onload = () => { };
+    }
   }
 
   render() {
     return (
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
-          <Image image={this.state.image} />
+          <Image image={this.state.image} ref={node => {
+            this.imageNode = node;
+          }} />
           <Line
             x={60}
             y={20}
             points={[0, 0, 100, 0, 100, 100, 50, 150, -10, 100]}
             closed
             stroke="#f5222d"
-            strokeWidth="4"
+            strokeWidth={4}
           />
         </Layer>
       </Stage>
     );
   }
 }
-export default Component;
+export default ImageCanvas;
