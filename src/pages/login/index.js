@@ -45,11 +45,11 @@ class LoginForm extends React.Component {
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
             )}
           </FormItem>
-          <FormItem>
+          <div className={styles.btnWrap}>
             <Button loading={loading} type="primary" htmlType="submit" className="login-form-button">
               登录系统
             </Button>
-          </FormItem>
+          </div>
         </Form>
       </div>
     );
