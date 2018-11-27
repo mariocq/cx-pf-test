@@ -3,6 +3,7 @@ import getMarkCss from "../../utils/markType"
 import styles from './index.less';
 import Sample from "../../assets/sample.jpeg";
 import TimeCount from "./timeCount";
+import ImageCanvas from "./imageCanvas";
 
 export default function () {
   // edge-loss, edge-crack, burr, tower-type, loose-roll, roll
@@ -14,19 +15,13 @@ export default function () {
       "markPosition": { x: Math.floor(Math.random() * 1200), y: Math.floor(Math.random() * 700) }
     });
   }
-  const data = list.map((item, index) => {
-    const css = getMarkCss(item.markType);
-    const pos = { marginLeft: item.markPosition.x, marginTop: item.markPosition.y }
-    return <div key={index} className={`mark-tag ${css}`} style={pos}></div>;
-  })
-
 
   return (
     <div className={styles.normal}>
 
       <div className={styles.title}>
         <div className="left">
-          <div className="left"><h3>实时图片 ID：20181122-2-33</h3></div>
+          <div className="left"><h3><TimeCount/></h3></div>
           <div className="left real-time-title-badge">
             <Badge count={1}><Tag color="red">边损</Tag></Badge>
             <Badge count={5}><Tag color="orange">边裂</Tag></Badge>
@@ -37,16 +32,13 @@ export default function () {
           </div>
         </div>
         <div className="right">
-          <TimeCount/>
+          <h3>实时图片 ID：20181122-2-33</h3>
         </div>
       </div>
 
       <div className={styles.detail}>
         <div className={`${styles["detail-wrap"]} left`}>
-          <div>
-            {data}
-          </div>
-          <img src={Sample} alt="" />
+          <ImageCanvas />
         </div>
       </div>
     </div>
