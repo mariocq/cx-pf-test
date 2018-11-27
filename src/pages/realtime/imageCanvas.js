@@ -24,8 +24,6 @@ class Component extends React.Component {
   }
 
   render() {
-    console.log(this.state.image);
-
     return (
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>

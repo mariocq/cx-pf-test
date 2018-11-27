@@ -51,7 +51,8 @@ export default {
   // {token:"xxxxx",imgID:"20181129-1-2"}
   // markType说明: 边损，边裂，毛刺，塔型、松卷，面包卷
   // markType取值: edge-loss, edge-crack, burr, tower-type, loose-roll, roll
-  // markPosition: 数组长度必须为偶数，两项为一个点，且必须大于3个点。约定按顺序链接，最后一个点和第一个点闭合
+  // markPosition: 数组长度必须为偶数，两项为一个点。约定按顺序链接。
+  //               只有一个点时，为单点。两个点为短线。三个点以上，最后一个点和第一个点闭合，为多边形。
   'POST /api/detail': (req, res) => {
     setTimeout(() => {
       res.send(
@@ -61,16 +62,16 @@ export default {
           imgURL: "http://10.10.0.1/target/xxx.jpg",
           imgSizeWidth: "1920",
           imgSizeHeight: "1080",
-          status: "edge-loss",
+          status: "unmark",
           markDetail: [
             {
               markID: "1",
-              markType: "failed",
+              markType: "tower-type",
               markPosition: [0, 0, 100, 0, 100, 100, 50, 150, 10, 100]
             },
             {
               markID: "2",
-              markType: "burr",
+              markType: "edge-loss",
               markPosition: [0, 0, 100, 0, 100, 100, 50, 150, 10, 100]
             }
           ]
