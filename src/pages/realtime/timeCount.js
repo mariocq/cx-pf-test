@@ -12,13 +12,13 @@ class Component extends React.Component {
   }
 
   componentDidUpdate() {
-    this.timer = setTimeout(() => {
-      this.setState({ time: this.state.time + 1000 })
-    }, 1000);
+    // this.timer = setTimeout(() => {
+    //   this.setState({ time: this.state.time + 1000 })
+    // }, 1000);
   }
 
   componentWillUnmount() {
-    this.timer && clearTimeout(this.timer);
+    // this.timer && clearTimeout(this.timer);
   }
 
   render() {

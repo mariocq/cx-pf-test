@@ -23,15 +23,6 @@ class Component extends React.Component {
   }
 
   render() {
-    // edge-loss, edge-crack, burr, tower-type, loose-roll, roll
-    const list = [];
-    for (let i = 1; i < 20; i++) {
-      const types = ["edge-loss", "edge-crack", "burr", "tower-type", "loose-roll", "roll"]
-      list.push({
-        "markType": types[Math.floor(Math.random() * 6)],
-        "markPosition": { x: Math.floor(Math.random() * 1200), y: Math.floor(Math.random() * 700) }
-      });
-    }
     // 获取实时图片数据
     const { realtimeData, loading } = this.props;
 
