@@ -13,11 +13,20 @@ class Component extends React.Component {
     })
   }
 
+  getBadgeCount(type) {
+    if (type) {
+      const { realtimeData } = this.props;
+      const marks = realtimeData.markDetail || [];
+      const count = marks.filter(item => item.markType === type);
+      return count.length;
+    }
+  }
+
   render() {
     // edge-loss, edge-crack, burr, tower-type, loose-roll, roll
     const list = [];
     for (let i = 1; i < 20; i++) {
-      const types = ["edge -loss", "edge-crack", "burr", "tower-type", "loose-roll", "roll"]
+      const types = ["edge-loss", "edge-crack", "burr", "tower-type", "loose-roll", "roll"]
       list.push({
         "markType": types[Math.floor(Math.random() * 6)],
         "markPosition": { x: Math.floor(Math.random() * 1200), y: Math.floor(Math.random() * 700) }
@@ -33,12 +42,12 @@ class Component extends React.Component {
           <div className="left">
             <div className="left"><h3><TimeCount /></h3></div>
             <div className="left real-time-title-badge">
-              <Badge count={1}><Tag color="red">边损</Tag></Badge>
-              <Badge count={5}><Tag color="orange">边裂</Tag></Badge>
-              <Badge count={3}><Tag color="green">毛刺</Tag></Badge>
-              <Badge count={2}><Tag color="cyan">塔型</Tag></Badge>
-              <Badge count={0}><Tag color="blue">松卷</Tag></Badge>
-              <Badge count={5}><Tag color="purple">面包卷</Tag></Badge>
+              <Badge count={this.getBadgeCount("edge-loss")}><Tag color="red">边损</Tag></Badge>
+              <Badge count={this.getBadgeCount("edge-crack")}><Tag color="orange">边裂</Tag></Badge>
+              <Badge count={this.getBadgeCount("burr")}><Tag color="green">毛刺</Tag></Badge>
+              <Badge count={this.getBadgeCount("tower-type")}><Tag color="cyan">塔型</Tag></Badge>
+              <Badge count={this.getBadgeCount("loose-roll")}><Tag color="blue">松卷</Tag></Badge>
+              <Badge count={this.getBadgeCount("roll")}><Tag color="purple">面包卷</Tag></Badge>
             </div>
           </div>
           <div className="right">

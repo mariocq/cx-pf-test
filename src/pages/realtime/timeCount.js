@@ -2,7 +2,7 @@
 
 class Component extends React.Component {
   state = {
-    time: 1
+    time: 0
   }
 
   componentDidMount() {
