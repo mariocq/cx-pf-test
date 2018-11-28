@@ -1,20 +1,18 @@
 import { Image, Layer, Line, Stage } from 'react-konva';
-
-const defaultWidth = 1920;
-const defaultHeight = 1080;
-
-
+import Config from '../../utils/config';
 
 class ImageCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.handelResize = this.handelResize.bind(this);
   }
+
   state = {
     image: new window.Image(),
     canvasWidth: 0,
     canvasHeight: 0,
   }
+
   componentDidMount() {
     // 图片加载及监听
     this.state.image.src = 'https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg';
@@ -26,12 +24,20 @@ class ImageCanvas extends React.Component {
       this.calcWidth();
     }, 100);
 
-    // resize监听
+    // resize添加监听
     window.addEventListener('resize', this.handelResize);
   }
 
   componentWillUnmount() {
+    // delete监听
     window.removeEventListener('resize', this.handelResize);
+
+    // 清除Canvas异步事件
+    const { image } = this.state;
+    if (image) {
+      image.onload = () => { };
+    }
+    this.timer && clearTimeout(this.timer);
   }
 
   handelResize() {
@@ -39,18 +45,16 @@ class ImageCanvas extends React.Component {
       this.calcWidth();
     }
   }
-  calcWidth(){
-    const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;
-    const canvasHeight = Math.floor(canvasWidth / defaultWidth * defaultHeight);
-    this.setState({ canvasWidth, canvasHeight });
-  }
 
-  componentWillUnmount() {
-    const { image } = this.state;
-    if (image) {
-      image.onload = () => { };
-    }
-    this.timer && clearTimeout(this.timer);
+  /**
+   * 根据默认大小比例，计算显示尺寸
+   */
+  calcWidth() {
+    const { SystemConst } = Config;
+
+    const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;
+    const canvasHeight = Math.floor(canvasWidth / SystemConst.IMG_DEFAULT_WIDTH * SystemConst.IMG_DEFAULT_HEIGHT);
+    this.setState({ canvasWidth, canvasHeight });
   }
 
   render() {
