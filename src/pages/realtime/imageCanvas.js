@@ -14,13 +14,16 @@ class ImageCanvas extends React.Component {
   }
 
   componentDidMount() {
-    // 图片加载及监听
-    this.state.image.src = 'https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg';
-    this.state.image.onload = () => {
-      this.imageNode.getLayer().batchDraw();
-    };
+    const { data } = this.props;
+    if (data.imgURL) {
+      // 图片加载
+      this.state.image.src = data.imgURL;
+      this.state.image.onload = () => {
+        this.imageNode.getLayer().batchDraw();
+      };
+    }
+    // 等待Dom构建，计算初始化大小
     this.timer = setTimeout(() => {
-      // 等待Dom构建
       this.calcWidth();
     }, 100);
 

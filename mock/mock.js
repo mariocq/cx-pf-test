@@ -59,7 +59,7 @@ export default {
         // response
         {
           imgID: "20181129-1-2",
-          imgURL: "http://10.10.0.1/target/xxx.jpg",
+          imgURL: "https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg",
           imgSizeWidth: "1920",
           imgSizeHeight: "1080",
           status: "unmark",
@@ -88,20 +88,25 @@ export default {
         // response
         {
           imgID: "20181129-1-2",
-          imgURL: "http://10.10.0.1:8080/target/xxx.jpg",
+          imgURL: "https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg",
           imgSizeWidth: "1920",
           imgSizeHeight: "1080",
           status: "unmark",
           markDetail: [
             {
               markID: "1",
-              markType: "failed",
-              markPosition: { x: "200", y: "300" }
+              markType: "tower-type",
+              markPosition: [0, 0, 100, 0, 100, 100, 50, 150, 10, 100]
             },
             {
               markID: "2",
-              markType: "hole",
-              markPosition: { x: "300", y: "500" }
+              markType: "edge-loss",
+              markPosition: [220, 220, 320, 220, 320, 320, 270, 370, 230, 320]
+            },
+            {
+              markID: "3",
+              markType: "burr",
+              markPosition: [400, 300]
             }
           ]
         }
