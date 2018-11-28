@@ -1,4 +1,4 @@
-import { Image, Layer, Line, Stage } from 'react-konva';
+import { Image, Layer, Line, Stage, Circle } from 'react-konva';
 import Config from '../../utils/config';
 
 class ImageCanvas extends React.Component {
@@ -62,6 +62,31 @@ class ImageCanvas extends React.Component {
 
   render() {
     const { canvasWidth, canvasHeight } = this.state;
+    const { data } = this.props;
+    const marks = data.markDetail || [];
+
+    // line rect
+    const lines = marks.filter(item => item.markPosition.length > 2);
+    const displayLines = lines.map((item, index) => {
+      return (
+        <Line
+          key={index}
+          x={0}
+          y={0}
+          points={item.markPosition}
+          closed
+          stroke="#f5222d"
+          strokeWidth={4}
+        />)
+    })
+
+    // point
+    const points = marks.filter(item => item.markPosition.length === 2);
+    const displayPoints = points.map((item, index) => {
+      return (
+        <Circle x={item.markPosition[0]} y={item.markPosition[1]} radius={4} fill="#f5222d" />
+      )
+    })
 
     return (
       <div ref={dom => { this.wrapNode = dom }}>
@@ -74,14 +99,8 @@ class ImageCanvas extends React.Component {
               ref={node => {
                 this.imageNode = node;
               }} />
-            <Line
-              x={60}
-              y={20}
-              points={[0, 0, 100, 0, 100, 100, 50, 150, -10, 100]}
-              closed
-              stroke="#f5222d"
-              strokeWidth={4}
-            />
+            {displayLines}
+            {displayPoints}
           </Layer>
         </Stage>
       </div>
