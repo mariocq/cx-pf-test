@@ -1,12 +1,12 @@
 
-export default function getMarkCss(type) {
+export default function getMarkColor(type) {
   const typeList = {
-    "edge-loss" : "mark-tag-red",
-    "edge-crack" : "mark-tag-orange",
-    "burr" : "mark-tag-green",
-    "tower-type" : "mark-tag-cyan",
-    "loose-roll" : "mark-tag-blue",
-    "roll" : "mark-tag-purple",
+    "edge-loss" : "#f5222d",
+    "edge-crack" : "#fa8c16",
+    "burr" : "#52c41a",
+    "tower-type" : "#13c2c2",
+    "loose-roll" : "#1890ff",
+    "roll" : "#722ed1",
   }
   return typeList[type];
 }

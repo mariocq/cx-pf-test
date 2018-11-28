@@ -107,7 +107,12 @@ export default {
               markID: "3",
               markType: "burr",
               markPosition: [400, 300]
-            }
+            },
+            {
+              markID: "4",
+              markType: "edge-loss",
+              markPosition: [520, 520, 420, 420]
+            },
           ]
         }
       );

@@ -1,5 +1,7 @@
-import { Image, Layer, Line, Stage, Circle } from 'react-konva';
+import { Spin } from 'antd';
+import { Circle, Image, Layer, Line, Stage } from 'react-konva';
 import Config from '../../utils/config';
+import getMarkColor from '../../utils/markType';
 
 class ImageCanvas extends React.Component {
   constructor(props) {
@@ -60,6 +62,23 @@ class ImageCanvas extends React.Component {
     this.setState({ canvasWidth, canvasHeight });
   }
 
+  /**
+   * 根据默认比例，计算显示坐标
+   */
+  calcDisplay(arr) {
+    const { canvasWidth, canvasHeight } = this.state;
+    const { SystemConst } = Config;
+
+    const positionArr = arr.map((item, index) => {
+      if (index % 2) {
+        return Math.floor(canvasHeight * item / SystemConst.IMG_DEFAULT_HEIGHT);
+      } else {
+        return Math.floor(canvasWidth * item / SystemConst.IMG_DEFAULT_WIDTH);
+      }
+    })
+    return positionArr;
+  }
+
   render() {
     const { canvasWidth, canvasHeight } = this.state;
     const { data } = this.props;
@@ -68,14 +87,15 @@ class ImageCanvas extends React.Component {
     // line rect
     const lines = marks.filter(item => item.markPosition.length > 2);
     const displayLines = lines.map((item, index) => {
+      const position = this.calcDisplay(item.markPosition);
       return (
         <Line
           key={index}
           x={0}
           y={0}
-          points={item.markPosition}
+          points={position}
           closed
-          stroke="#f5222d"
+          stroke={getMarkColor(item.markType)}
           strokeWidth={4}
         />)
     })
@@ -83,26 +103,35 @@ class ImageCanvas extends React.Component {
     // point
     const points = marks.filter(item => item.markPosition.length === 2);
     const displayPoints = points.map((item, index) => {
+      const position = this.calcDisplay(item.markPosition);
       return (
-        <Circle x={item.markPosition[0]} y={item.markPosition[1]} radius={4} fill="#f5222d" />
+        <Circle
+          key={index}
+          x={position[0]}
+          y={position[1]}
+          radius={4}
+          fill={getMarkColor(item.markType)}
+        />
       )
     })
 
     return (
       <div ref={dom => { this.wrapNode = dom }}>
-        <Stage width={canvasWidth} height={canvasHeight}>
-          <Layer>
-            <Image
-              image={this.state.image}
-              width={canvasWidth}
-              height={canvasHeight}
-              ref={node => {
-                this.imageNode = node;
-              }} />
-            {displayLines}
-            {displayPoints}
-          </Layer>
-        </Stage>
+        <Spin spinning={this.props.loading}>
+          <Stage width={canvasWidth} height={canvasHeight}>
+            <Layer>
+              <Image
+                image={this.state.image}
+                width={canvasWidth}
+                height={canvasHeight}
+                ref={node => {
+                  this.imageNode = node;
+                }} />
+              {displayLines}
+              {displayPoints}
+            </Layer>
+          </Stage>
+        </Spin>
       </div>
     );
   }

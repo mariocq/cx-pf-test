@@ -24,9 +24,7 @@ class Component extends React.Component {
       });
     }
     // 获取实时图片数据
-    const { realtimeData } = this.props;
-    console.log(this.props.loading);
-
+    const { realtimeData, loading } = this.props;
 
     return (
       <div className={styles.normal}>
@@ -52,6 +50,7 @@ class Component extends React.Component {
           <div className={`${styles["detail-wrap"]}`}>
             <ImageCanvas
               data={realtimeData}
+              loading={loading}
             />
           </div>
         </div>
