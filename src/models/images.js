@@ -1,5 +1,5 @@
 import * as imagesService from '../services/images';
-import StringUtils from "../utils/string";
+import StringUtils from "../utils/stringUtils";
 
 export default {
   state: {
