@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Input } from 'antd';
+import { Button, Form, Icon, Input, Modal } from 'antd';
 import { connect } from 'dva';
 import router from 'umi/router';
 import styles from './index.less';
@@ -18,9 +18,20 @@ class LoginForm extends React.Component {
   }
 
   componentDidUpdate() {
-    const { login } = this.props;
+    const { login, msg } = this.props;
     if (login) {
       router.push('/realtime');
+    }
+    if (msg) {
+      Modal.error({
+        title: "登录失败",
+        content: "您输入用户名密码不匹配，请检查后再尝试",
+      })
+
+      // clear msg
+      this.props.dispatch({
+        type: 'global/clearmsg',
+      })
     }
   }
 
@@ -58,9 +69,10 @@ class LoginForm extends React.Component {
 
 const WrappedLoginForm = Form.create()(LoginForm);
 function mapStateToProps(state) {
-  const { login } = state.global;
+  const { login, msg } = state.global;
   return {
     login,
+    msg,
     loading: state.loading.models.global,
   };
 }

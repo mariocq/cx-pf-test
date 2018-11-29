@@ -6,7 +6,7 @@ import getMarkColor from '../../utils/markType';
 class ImageCanvas extends React.Component {
   constructor(props) {
     super(props);
-    this.handelResize = this.handelResize.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   state = {
@@ -17,6 +17,8 @@ class ImageCanvas extends React.Component {
 
   componentDidMount() {
     const { data } = this.props;
+    console.log(data.imgURL);
+
     if (data.imgURL) {
       // 图片加载
       this.state.image.src = data.imgURL;
@@ -30,12 +32,12 @@ class ImageCanvas extends React.Component {
     }, 100);
 
     // resize添加监听
-    window.addEventListener('resize', this.handelResize);
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
     // delete监听
-    window.removeEventListener('resize', this.handelResize);
+    window.removeEventListener('resize', this.handleResize);
 
     // 清除Canvas异步事件
     const { image } = this.state;
@@ -45,12 +47,16 @@ class ImageCanvas extends React.Component {
     this.timer && clearTimeout(this.timer);
   }
 
-  handelResize() {
+  handleResize() {
     if (this.wrapNode) {
       this.calcWidth();
     }
   }
 
+  handleMouseOver(e){
+    console.log(e.target);
+
+  }
   /**
    * 根据默认大小比例，计算显示尺寸
    */
@@ -124,6 +130,7 @@ class ImageCanvas extends React.Component {
                 image={this.state.image}
                 width={canvasWidth}
                 height={canvasHeight}
+                onMouseOver={this.handleMouseOver}
                 ref={node => {
                   this.imageNode = node;
                 }} />
