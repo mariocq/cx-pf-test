@@ -24,7 +24,7 @@ class Component extends React.Component {
 
   render() {
     // 获取实时图片数据
-    const { realtimeData, loading } = this.props;
+    const { realtimeData, loading, resizeHash } = this.props;
 
     return (
       <div className={styles.normal}>
@@ -50,6 +50,7 @@ class Component extends React.Component {
           <div className={`${styles["detail-wrap"]}`}>
             <ImageCanvas
               data={realtimeData}
+              resizeHash={resizeHash}
               loading={loading}
             />
           </div>
@@ -60,9 +61,10 @@ class Component extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  const { realtimeData } = state.images;
+  const { realtimeData, resizeHash } = state.images;
   return {
     realtimeData,
+    resizeHash,
     loading: state.loading.models.images,
   };
 }

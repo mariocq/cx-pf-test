@@ -15,6 +15,13 @@ class BasicLayout extends React.Component {
     this.setState({
       collapsed: !this.state.collapsed,
     });
+
+    // 折叠动画完毕后触发
+    setTimeout(() => {
+      this.props.dispatch({
+        type: 'images/randomHash'
+      })
+    }, 500);
   }
 
   handleLogout = () => {

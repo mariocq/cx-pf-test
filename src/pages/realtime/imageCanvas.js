@@ -25,7 +25,7 @@ class ImageCanvas extends React.Component {
     window.addEventListener('resize', this.handleResize);
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     const { data } = this.props;
     if (data.imgURL) {
       // 图片加载
@@ -33,6 +33,12 @@ class ImageCanvas extends React.Component {
       this.state.image.onload = () => {
         this.imageNode.getLayer().batchDraw();
       };
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.resizeHash && nextProps.resizeHash !== this.props.resizeHash) {
+      this.handleResize();
     }
   }
 
@@ -62,7 +68,6 @@ class ImageCanvas extends React.Component {
    */
   calcWidth() {
     const { SystemConst } = Config;
-
     const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;
     const canvasHeight = Math.floor(canvasWidth / SystemConst.IMG_DEFAULT_WIDTH * SystemConst.IMG_DEFAULT_HEIGHT);
     this.setState({ canvasWidth, canvasHeight });
