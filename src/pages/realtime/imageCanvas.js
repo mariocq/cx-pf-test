@@ -53,9 +53,8 @@ class ImageCanvas extends React.Component {
     }
   }
 
-  handleMouseOver(e){
-    console.log(e.target);
-
+  handleMouseMove(e) {
+    // console.log(e.evt.offsetX, e.evt.offsetY);
   }
   /**
    * 根据默认大小比例，计算显示尺寸
@@ -103,6 +102,7 @@ class ImageCanvas extends React.Component {
           closed
           stroke={getMarkColor(item.markType)}
           strokeWidth={4}
+          onMouseMove={this.handleMouseMove}
         />)
     })
 
@@ -117,6 +117,7 @@ class ImageCanvas extends React.Component {
           y={position[1]}
           radius={4}
           fill={getMarkColor(item.markType)}
+          onMouseMove={this.handleMouseMove}
         />
       )
     })
@@ -130,7 +131,7 @@ class ImageCanvas extends React.Component {
                 image={this.state.image}
                 width={canvasWidth}
                 height={canvasHeight}
-                onMouseOver={this.handleMouseOver}
+                onMouseMove={this.handleMouseMove}
                 ref={node => {
                   this.imageNode = node;
                 }} />
