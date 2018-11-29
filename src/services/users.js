@@ -1,7 +1,8 @@
 import request from '../utils/request';
+import IP from "./ip";
 
 export function login(values) {
-  return request('http://120.79.44.187:5000/api/login', {
+  return request(IP.domain + '/api/login', {
     method: 'POST',
     body: JSON.stringify(values),
   });

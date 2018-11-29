@@ -21,8 +21,8 @@ export default {
     },
   },
   effects: {
-    *realtime({ }, { put, call }) {
-      const { data } = yield call(imagesService.realtime, { token: "xxx" });
+    *realtime({ payload }, { put, call }) {
+      const { data } = yield call(imagesService.realtime, payload);
       if (data) {
         // 设置reducer
         yield put({

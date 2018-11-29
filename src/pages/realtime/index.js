@@ -7,9 +7,11 @@ import ImageCanvas from "./imageCanvas";
 class Component extends React.Component {
 
   componentDidMount() {
+    const { token } = this.props;
     // 获取实时数据
     this.props.dispatch({
-      type: 'images/realtime'
+      type: 'images/realtime',
+      payload: { token },
     })
   }
 
@@ -62,9 +64,11 @@ class Component extends React.Component {
 }
 function mapStateToProps(state) {
   const { realtimeData, resizeHash } = state.images;
+  const { token } = state.global;
   return {
     realtimeData,
     resizeHash,
+    token,
     loading: state.loading.models.images,
   };
 }
