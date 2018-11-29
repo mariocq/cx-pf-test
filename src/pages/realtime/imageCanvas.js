@@ -16,16 +16,6 @@ class ImageCanvas extends React.Component {
   }
 
   componentDidMount() {
-    const { data } = this.props;
-    console.log(data.imgURL);
-
-    if (data.imgURL) {
-      // 图片加载
-      this.state.image.src = data.imgURL;
-      this.state.image.onload = () => {
-        this.imageNode.getLayer().batchDraw();
-      };
-    }
     // 等待Dom构建，计算初始化大小
     this.timer = setTimeout(() => {
       this.calcWidth();
@@ -33,6 +23,17 @@ class ImageCanvas extends React.Component {
 
     // resize添加监听
     window.addEventListener('resize', this.handleResize);
+  }
+
+  componentDidUpdate(){
+    const { data } = this.props;
+    if (data.imgURL) {
+      // 图片加载
+      this.state.image.src = data.imgURL;
+      this.state.image.onload = () => {
+        this.imageNode.getLayer().batchDraw();
+      };
+    }
   }
 
   componentWillUnmount() {
