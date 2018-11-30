@@ -9,7 +9,6 @@ class Detail extends React.Component {
   componentDidMount() {
     const { id } = this.props.location.query;
     const { token } = this.props;
-    console.log(id && token, id, token);
 
     if (id && token) {
       // 获取详情
