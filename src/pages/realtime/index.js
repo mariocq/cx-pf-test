@@ -1,8 +1,8 @@
 import { Tag, Badge } from 'antd';
 import { connect } from 'dva';
 import styles from './index.less';
-import TimeCount from "./timeCount";
-import ImageCanvas from "./imageCanvas";
+import TimeCount from "./ui.time.count";
+import ImageCanvas from "../../components/ImageCanvas";
 
 class Component extends React.Component {
 

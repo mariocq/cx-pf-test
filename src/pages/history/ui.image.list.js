@@ -1,6 +1,6 @@
 import { Popconfirm, Button } from 'antd';
 import { List, Card } from 'antd';
-import productImg from '../assets/sample.jpeg';
+import productImg from '../../assets/sample.jpeg';
 const ImageList = ({ handleDetail, imgs }) => {
   let data = [];
 

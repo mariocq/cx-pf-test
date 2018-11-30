@@ -1,6 +1,6 @@
 import { connect } from 'dva';
-import ImageList from '../../components/ImageList';
-import SearchBar from './search';
+import ImageList from './ui.image.list';
+import SearchBar from './ui.search';
 import styles from './index.less';
 
 const HistoryList = ({ dispatch, imgs }) => {
