@@ -6,20 +6,23 @@ import styles from './index.less';
 class HistoryList extends React.Component {
   componentDidMount() {
     const { token } = this.props;
-    // 获取实时数据
+    // 获取历史数据
     this.props.dispatch({
       type: 'history/fetch',
       payload: { token },
     })
   }
   handleDetail(id) {
+    const { token } = this.props;
+    // 获取详情
     this.props.dispatch({
       type: 'history/detail',
-      payload: id,
+      payload: { token , imgID: id}
     });
   }
   handleSearch(data) {
     data.token = this.props.token;
+    // 筛选历史数据
     this.props.dispatch({
       type: 'history/fetch',
       payload: data,
@@ -35,7 +38,7 @@ class HistoryList extends React.Component {
           handleSearch={this.handleSearch.bind(this)}
         />
         <ImageList
-          handleDetail={this.handleDetail}
+          handleDetail={this.handleDetail.bind(this)}
           imgs={history}
         />
       </div>

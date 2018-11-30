@@ -7,3 +7,9 @@ export function fetch(values) {
     body: JSON.stringify(values),
   });
 }
+export function detail(values) {
+  return request(IP.domain + '/api/detail', {
+    method: 'POST',
+    body: JSON.stringify(values),
+  });
+}
