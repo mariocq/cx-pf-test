@@ -3,10 +3,10 @@ import * as historyService from '../services/history';
 export default {
   state: {
     history: [],
-    detail: {},
+    detail: false,
   },
   reducers: {
-    update(state, { payload }) {
+    updateList(state, { payload }) {
       return {
         ...state,
         history: payload
@@ -25,7 +25,7 @@ export default {
       if (data.history) {
         // 设置reducer
         yield put({
-          type: 'update',
+          type: 'updateList',
           payload: data.history,
         });
       }

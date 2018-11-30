@@ -15,13 +15,17 @@ class Component extends React.Component {
       // 标记状态
       const status = values.status;
 
-      // 卷数 TODO
+      // 卷数
+      // TODO: 二期功能
 
+      // 组装查询条件
       const search = {
         "day": day,
         "status": status,
         roll: []
       }
+
+      // 父组件事件
       this.props.handleSearch(search);
     });
   }

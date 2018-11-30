@@ -1,6 +1,7 @@
 import { connect } from 'dva';
 import ImageList from './ui.image.list';
 import SearchBar from './ui.search';
+import router from 'umi/router';
 import styles from './index.less';
 
 class HistoryList extends React.Component {
@@ -13,12 +14,7 @@ class HistoryList extends React.Component {
     })
   }
   handleDetail(id) {
-    const { token } = this.props;
-    // 获取详情
-    this.props.dispatch({
-      type: 'history/detail',
-      payload: { token , imgID: id}
-    });
+    router.push({ pathname: '/detail', query: { id } });
   }
   handleSearch(data) {
     data.token = this.props.token;
