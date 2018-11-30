@@ -1,8 +1,27 @@
+import * as historyService from '../services/history';
+
 export default {
-  state: [],
+  state: {
+    history: [],
+  },
   reducers: {
-    'detail'(state, { payload: id }) {
-      return state.filter(item => item.id !== id);
+    update(state, { payload }) {
+      return {
+        ...state,
+        history: payload
+      };
     },
   },
-};
+  effects: {
+    *fetch({ payload }, { put, call }) {
+      const { data } = yield call(historyService.fetch, payload);
+      if (data.history) {
+        // 设置reducer
+        yield put({
+          type: 'update',
+          payload: data.history,
+        });
+      }
+    },
+  },
+}

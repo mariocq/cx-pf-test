@@ -17,6 +17,7 @@ export default {
       res.send(
         // response
         {
+          msg: "ok",
           history: [
             {
               imgID: "20181129-1-1",
@@ -41,6 +42,7 @@ export default {
       res.send(
         // response
         {
+          msg: "ok",
           rolls: ["20181129-1", "20181129-2"]
         }
       );
@@ -58,6 +60,7 @@ export default {
       res.send(
         // response
         {
+          msg: "ok",
           imgID: "20181129-1-2",
           imgURL: "https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg",
           imgSizeWidth: "1920",
@@ -129,6 +132,7 @@ export default {
       res.send(
         // response
         {
+          msg: "ok",
           imgID: "20181129-1-2",
           imgURL: "https://img.zcool.cn/community/0100e655445e5b0000019ae9770313.jpg@2o.jpg",
           imgSizeWidth: "1920",

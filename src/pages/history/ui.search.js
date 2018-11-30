@@ -1,14 +1,28 @@
 import { Form, Row, Col, Select, Button, DatePicker } from 'antd';
+import moment from 'moment';
 
 import styles from './index.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
 class Component extends React.Component {
 
-  handleSearch = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log('Received values of form: ', values);
+      // 格式化日期
+      const day = values.date ? moment(values.date).format("YYYYMMDD") : "";
+
+      // 标记状态
+      const status = values.status;
+
+      // 卷数 TODO
+
+      const search = {
+        "day": day,
+        "status": status,
+        roll: []
+      }
+      this.props.handleSearch(search);
     });
   }
   handleReset = () => {
@@ -41,15 +55,15 @@ class Component extends React.Component {
             rules: [{
               required: true, message: '请输入标记状态', type: 'array'
             }],
-            initialValue: ['1', '2'],
+            initialValue: ['unmark', 'marked'],
 
           })(
             <Select
               mode="multiple"
               style={{ width: 300 }}
             >
-              <Option key={1}>无标记</Option>
-              <Option key={2}>有标记</Option>
+              <Option key={1} value="unmark">无标记</Option>
+              <Option key={2} value="marked">有标记</Option>
             </Select>,
           )}
         </FormItem>
@@ -83,18 +97,18 @@ class Component extends React.Component {
     return children;
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
     return (
       <div className={styles.searchWrap}>
         <Form
           className={styles.form}
+          onSubmit={this.handleSubmit}
         >
           <Row gutter={24}>{this.getFields()}</Row>
           <Row>
             <Col span={24} style={{ textAlign: 'right' }}>
-              <Button type="primary" htmlType="submit">Search</Button>
+              <Button type="primary" htmlType="submit">搜索</Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-                Clear
+                清空条件
               </Button>
             </Col>
           </Row>
