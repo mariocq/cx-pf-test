@@ -4,7 +4,7 @@ import StringUtils from "../utils/stringUtils";
 export default {
   state: {
     realtimeData: false,
-    resizeHash: "",
+    resizeHash: "", // 监听resize事件，由左侧菜单折叠触发
   },
   reducers: {
     update(state, { payload }) {
@@ -23,7 +23,7 @@ export default {
   effects: {
     *realtime({ payload }, { put, call }) {
       const { data } = yield call(imagesService.realtime, payload);
-      if (data) {
+      if (data && data.msg === "ok") {
         // 设置reducer
         yield put({
           type: 'update',

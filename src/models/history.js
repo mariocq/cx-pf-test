@@ -22,7 +22,7 @@ export default {
   effects: {
     *fetch({ payload }, { put, call }) {
       const { data } = yield call(historyService.fetch, payload);
-      if (data.history) {
+      if (data.msg === "ok") {
         // 设置reducer
         yield put({
           type: 'updateList',
@@ -32,7 +32,7 @@ export default {
     },
     *detail({ payload }, { put, call }) {
       const { data } = yield call(historyService.detail, payload);
-      if (data) {
+      if (data.msg === "ok") {
         // 设置reducer
         yield put({
           type: 'updateDetail',

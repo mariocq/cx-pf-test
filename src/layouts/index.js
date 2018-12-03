@@ -8,7 +8,7 @@ const { Header, Sider, Content } = Layout;
 
 class BasicLayout extends React.Component {
   state = {
-    collapsed: false,
+    collapsed: false,  // 左侧菜单折叠状态
   };
 
   toggle = () => {
@@ -24,6 +24,9 @@ class BasicLayout extends React.Component {
     }, 500);
   }
 
+  /**
+   * 退出系统
+   */
   handleLogout = () => {
     Modal.confirm({
       title: '您确定退出本系统吗？',
@@ -39,9 +42,11 @@ class BasicLayout extends React.Component {
   }
 
   render() {
+    // 如果是登录页，采用简单框架
     if (this.props.location.pathname === '/login') {
       return <div>{this.props.children}</div>
     }
+    // 内页采用默认系统框架
     return (
       <div className={styles.normal} id="components-layout-demo-custom-trigger">
         <Layout>
@@ -66,6 +71,7 @@ class BasicLayout extends React.Component {
               </Menu.Item>
               <Menu.Item key="4" onClick={this.handleLogout.bind()}>
                 <Icon type="logout" />
+                {/* 登录状态由”退出“按钮组件控制 */}
                 <LeftMenu />
               </Menu.Item>
             </Menu>
