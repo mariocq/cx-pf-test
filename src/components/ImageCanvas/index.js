@@ -1,4 +1,3 @@
-import { Spin } from 'antd';
 import { Circle, Image, Layer, Line, Stage } from 'react-konva';
 import getMarkColor from '../../utils/markType';
 
@@ -14,7 +13,7 @@ class ImageCanvas extends React.Component {
     canvasHeight: 0,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // 等待Dom构建，计算初始化大小
     this.timer = setTimeout(() => {
       this.calcWidth();
@@ -141,22 +140,20 @@ class ImageCanvas extends React.Component {
 
     return (
       <div ref={dom => { this.wrapNode = dom }}>
-        <Spin spinning={this.props.loading}>
-          <Stage width={canvasWidth} height={canvasHeight}>
-            <Layer>
-              <Image
-                image={this.state.image}
-                width={canvasWidth}
-                height={canvasHeight}
-                onMouseMove={this.handleMouseMove}
-                ref={node => {
-                  this.imageNode = node;
-                }} />
-              {displayLines}
-              {displayPoints}
-            </Layer>
-          </Stage>
-        </Spin>
+        <Stage width={canvasWidth} height={canvasHeight}>
+          <Layer>
+            <Image
+              image={this.state.image}
+              width={canvasWidth}
+              height={canvasHeight}
+              onMouseMove={this.handleMouseMove}
+              ref={node => {
+                this.imageNode = node;
+              }} />
+            {displayLines}
+            {displayPoints}
+          </Layer>
+        </Stage>
       </div>
     );
   }

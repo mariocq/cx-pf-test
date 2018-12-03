@@ -1,4 +1,4 @@
-import { Tag, Badge } from 'antd';
+import { Tag, Badge, Spin } from 'antd';
 import { connect } from 'dva';
 import styles from './index.less';
 import TimeCount from "./ui.time.count";
@@ -50,11 +50,16 @@ class Component extends React.Component {
 
         <div className={styles.detail}>
           <div className={`${styles["detail-wrap"]}`}>
-            <ImageCanvas
-              data={realtimeData}
-              resizeHash={resizeHash}
-              loading={loading}
-            />
+            {loading ?
+              <Spin spinning={true}>
+                <div style={{height:200}}></div>
+              </Spin> :
+              <ImageCanvas
+                data={realtimeData}
+                resizeHash={resizeHash}
+                loading={loading}
+              />
+            }
           </div>
         </div>
       </div>
