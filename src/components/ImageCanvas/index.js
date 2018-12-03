@@ -1,6 +1,5 @@
 import { Spin } from 'antd';
 import { Circle, Image, Layer, Line, Stage } from 'react-konva';
-import Config from '../../utils/config';
 import getMarkColor from '../../utils/markType';
 
 class ImageCanvas extends React.Component {
@@ -36,7 +35,7 @@ class ImageCanvas extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     if (nextProps.resizeHash && nextProps.resizeHash !== this.props.resizeHash) {
       this.handleResize();
     }
@@ -54,22 +53,33 @@ class ImageCanvas extends React.Component {
     this.timer && clearTimeout(this.timer);
   }
 
+  /**
+   * 监听dom resize事件
+   */
   handleResize() {
     if (this.wrapNode) {
       this.calcWidth();
     }
   }
 
+  /**
+   * 监听dom MouseMove事件
+   */
   handleMouseMove(e) {
     // console.log(e.evt.offsetX, e.evt.offsetY);
   }
+
   /**
    * 根据默认大小比例，计算显示尺寸
    */
   calcWidth() {
-    const { SystemConst } = Config;
+    // 获取数据尺寸
+    const { data } = this.props;
+    const { imgSizeWidth, imgSizeHeight } = data;
+
+    // 计算显示尺寸
     const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;
-    const canvasHeight = Math.floor(canvasWidth / SystemConst.IMG_DEFAULT_WIDTH * SystemConst.IMG_DEFAULT_HEIGHT);
+    const canvasHeight = Math.floor(canvasWidth / imgSizeWidth * imgSizeHeight);
     this.setState({ canvasWidth, canvasHeight });
   }
 
@@ -78,13 +88,14 @@ class ImageCanvas extends React.Component {
    */
   calcDisplay(arr) {
     const { canvasWidth, canvasHeight } = this.state;
-    const { SystemConst } = Config;
+    const { data } = this.props;
+    const { imgSizeWidth, imgSizeHeight } = data;
 
     const positionArr = arr.map((item, index) => {
       if (index % 2) {
-        return Math.floor(canvasHeight * item / SystemConst.IMG_DEFAULT_HEIGHT);
+        return Math.floor(canvasHeight * item / imgSizeHeight);
       } else {
-        return Math.floor(canvasWidth * item / SystemConst.IMG_DEFAULT_WIDTH);
+        return Math.floor(canvasWidth * item / imgSizeWidth);
       }
     })
     return positionArr;
