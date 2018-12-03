@@ -5,7 +5,15 @@ export default {
     setTimeout(() => {
       res.send(
         // response
-        { msg: "ok", token: "xxxxx" }
+        {
+          msg: "ok",
+          token: "xxxxx",
+          profile: {
+            name: "xxx",
+            group: "管理员",
+            lastLoginTime: "1543807055923", //时间戳
+          }
+       }
       );
     }, 1000);
   },
@@ -144,4 +152,16 @@ export default {
     }, 1000);
   },
 
+  // 修改密码
+  // {token:"xxxxx", old: "xxx", new: "xxx"}
+  'POST /api/setpassword': (req, res) => {
+    setTimeout(() => {
+      res.send(
+        // response
+        {
+          msg: "ok"
+        }
+      );
+    }, 1000);
+  },
 };
