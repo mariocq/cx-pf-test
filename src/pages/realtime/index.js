@@ -6,7 +6,19 @@ import ImageCanvas from "../../components/ImageCanvas";
 
 class Component extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.updateRealtimeData = this.updateRealtimeData.bind(this);
+  }
+
   componentDidMount() {
+    this.updateRealtimeData();
+  }
+
+  /**
+   * 更新realtime数据
+   */
+  updateRealtimeData(){
     const { token } = this.props;
     // 获取实时数据
     this.props.dispatch({
@@ -33,7 +45,7 @@ class Component extends React.Component {
 
         <div className={styles.title}>
           <div className="left">
-            <div className="left"><h3><TimeCount /></h3></div>
+            <div className="left"><h3><TimeCount updateRealtimeData={this.updateRealtimeData} /></h3></div>
             <div className="left real-time-title-badge">
               <Badge count={this.getBadgeCount("edge-loss")}><Tag color="red">边损</Tag></Badge>
               <Badge count={this.getBadgeCount("edge-crack")}><Tag color="orange">边裂</Tag></Badge>
@@ -44,7 +56,7 @@ class Component extends React.Component {
             </div>
           </div>
           <div className="right">
-            <h3>实时图片 ID：20181122-2-33</h3>
+            <h3>实时图片 ID：{this.props.realtimeData.imgID}</h3>
           </div>
         </div>
 

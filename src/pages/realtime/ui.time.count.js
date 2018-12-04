@@ -1,32 +1,57 @@
+import moment from 'moment';
 
+const INTERVAL_TIME = 5;
 
 class Component extends React.Component {
   state = {
-    time: 0
+    time: 0, // 当前显示时间
+    count: 0, // 倒计时次数
   }
 
   componentDidMount() {
     const date = new Date();
     const time = date.getTime();
     this.setState({ time: time + 1000 });
-  }
 
-  componentDidUpdate() {
-    // this.timer = setTimeout(() => {
-    //   this.setState({ time: this.state.time + 1000 })
-    // }, 1000);
+    // 初始化Timer
+    this.timer = setInterval(() => {
+      // 每秒刷新
+      this.setState({ time: this.state.time + 1000 })
+
+      // 循环重置
+      let { count } = this.state;
+      if (count === INTERVAL_TIME - 1) {
+        count = 0;
+        // 触发重新加载
+        this.props.updateRealtimeData();
+      } else {
+        count++;
+      }
+      this.setState({ count })
+
+    }, 1000);
   }
 
   componentWillUnmount() {
-    // this.timer && clearTimeout(this.timer);
+    // 清理定时器
+    this.timer = clearTimeout(this.timer);
   }
 
+
   render() {
+    const { count, time } = this.state;
+    // 计时器时间
     const date = new Date();
-    date.setTime(this.state.time);
+    date.setTime(time);
+
+    // 时间显示格式
+    const now = moment(date).format("YYYY-MM-DD HH:mm:ss");
 
     return (
-      <span>{date.toLocaleString()}</span>
+      <span>
+        {5 - count}秒后刷新
+        <span className="text-gray"> {now}</span>
+      </span>
     );
   }
 }

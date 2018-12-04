@@ -88,7 +88,7 @@ class Profile extends React.Component {
                 <Icon type="team" />用户组：管理员{group}
               </div>
               <div className={styles.time}>
-                <Icon type="clock-circle" />上次登录时间：2018-12-03 15:25:42{time}
+                <Icon type="clock-circle" />上次登录：2018-12-03 15:25{time}
               </div>
               <div className={styles.btns}>
                 <Icon type="form" /><a href="javascript:;">修改密码</a>

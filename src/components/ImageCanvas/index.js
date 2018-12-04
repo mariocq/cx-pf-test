@@ -49,7 +49,7 @@ class ImageCanvas extends React.Component {
     if (image) {
       image.onload = () => { };
     }
-    this.timer && clearTimeout(this.timer);
+    this.timer = clearTimeout(this.timer);
   }
 
   /**

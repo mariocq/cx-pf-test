@@ -9,13 +9,9 @@ body {
   margin: 0;
 }
 
+/* 框架侧边栏 */
 .ant-layout-has-sider{
   height: 100vh;
-}
-
-.productImg{
-  width: 100%;
-  height: 100%;
 }
 
 .left{
@@ -26,28 +22,7 @@ body {
   float: right;
 }
 
-.mark-tag{
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  border-radius: 15px;
-  box-shadow: 0px 2px 5px rgba(0,0,0,.75);
-}
-.mark-tag-red{
-  border: 3px solid #f5222d;
-}
-.mark-tag-orange{
-  border: 3px solid #fa8c16;
-}
-.mark-tag-green{
-  border: 3px solid #52c41a;
-}
-.mark-tag-cyan{
-  border: 3px solid #13c2c2;
-}
-.mark-tag-blue{
-  border: 3px solid #1890ff;
-}
-.mark-tag-purple{
-  border: 3px solid #722ed1;
+/* 常用字体色 */
+.text-gray{
+  color: #aaa;
 }
