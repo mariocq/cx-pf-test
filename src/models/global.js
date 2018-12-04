@@ -5,6 +5,7 @@ export default {
     login: false,
     msg: "",
     token: "",
+    profile: {},
   },
   reducers: {
     signerror(state, { payload: { msg } }) {
@@ -14,11 +15,12 @@ export default {
         msg,
       };
     },
-    signok(state, { payload: { token } }) {
+    signok(state, { payload: { token, profile } }) {
       return {
         ...state,
         login: true,
         token,
+        profile,
       };
     },
     signout(state, { }) {
@@ -30,7 +32,7 @@ export default {
     },
   },
   effects: {
-    *login({ payload }, { call, put }) {
+    *login({ payload, callback }, { call, put }) {
       const { data } = yield call(usersService.login, payload);
       if (data) {
         // 设置reducer
@@ -47,6 +49,19 @@ export default {
             type: 'signok',
             payload: data,
           });
+          // callback(data)
+        }
+      }
+    },
+    *setpassword({ payload, callback, onError }, { call, put }) {
+      const { data } = yield call(usersService.setpassword, payload);
+      if (data) {
+        // 设置reducer
+        if (data.msg !== "ok") {
+          onError(data);
+        }
+        else {
+          callback(data);
         }
       }
     },
