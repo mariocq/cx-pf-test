@@ -1,6 +1,5 @@
 import moment from 'moment';
-
-const INTERVAL_TIME = 5;
+import Config from '../../utils/config';
 
 class Component extends React.Component {
   state = {
@@ -20,7 +19,7 @@ class Component extends React.Component {
 
       // 循环重置
       let { count } = this.state;
-      if (count === INTERVAL_TIME - 1) {
+      if (count === Config.INTERVAL_TIME - 1) {
         count = 0;
         // 触发重新加载
         this.props.updateRealtimeData();
@@ -49,7 +48,7 @@ class Component extends React.Component {
 
     return (
       <span>
-        {5 - count}秒后刷新
+        {Config.INTERVAL_TIME - count}秒后刷新
         <span className="text-gray"> {now}</span>
       </span>
     );
