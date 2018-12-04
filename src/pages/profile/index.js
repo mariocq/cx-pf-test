@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 import styles from './index.less';
 import SetPassword from './ui.set.password';
+import router from 'umi/router';
 
 const columns = [{
   title: '时间',
@@ -131,6 +132,13 @@ class Profile extends React.Component {
               <div className={styles.btns}>
                 <Icon type="form" /><a href="javascript:;" onClick={this.handleSetPasswordOpen.bind(this)}>修改密码</a>
               </div>
+              {group === "管理员" ?
+                // 管理员可看到按钮
+                <div className={styles.btns}>
+                  <Icon type="solution" /><a href="javascript:;" onClick={() => router.push('/admin')}>用户管理</a>
+                </div>
+                : ""
+              }
             </div>
           </Card>
         </div>
