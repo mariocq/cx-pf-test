@@ -13,9 +13,19 @@ export default {
             group: "管理员",
             lastLoginTime: "1543807055923", //时间戳
           }
-       }
+        }
       );
     }, 1000);
+  },
+  // 登出
+  // {"user":"a", token:"xxxxx"}
+  'POST /api/logout': (req, res) => {
+    res.send(
+      // response
+      {
+        msg: "ok",
+      }
+    )
   },
 
   // 历史记录

@@ -5,6 +5,7 @@ export default {
     login: false,
     msg: "",
     token: "",
+    id: "",
     profile: {},
   },
   reducers: {
@@ -15,11 +16,12 @@ export default {
         msg,
       };
     },
-    signok(state, { payload: { token, profile } }) {
+    signok(state, { payload: { token, profile, id } }) {
       return {
         ...state,
         login: true,
         token,
+        id,
         profile,
       };
     },
@@ -28,12 +30,14 @@ export default {
         ...state,
         login: false,
         token: "",
+        id: "",
+        profile: {},
       };
     },
   },
   effects: {
     *login({ payload, callback }, { call, put }) {
-      const { data } = yield call(usersService.login, payload);
+      let { data } = yield call(usersService.login, payload);
       if (data) {
         // 设置reducer
         if (data.msg !== "ok") {
@@ -45,11 +49,11 @@ export default {
         }
         else {
           // 登录成功
+          data.id = payload.user;
           yield put({
             type: 'signok',
             payload: data,
           });
-          // callback(data)
         }
       }
     },
@@ -72,11 +76,17 @@ export default {
         payload: { msg: "" },
       });
     },
-    *logout({ }, { put }) {
-      // 设置reducer
-      yield put({
-        type: 'signout',
-      });
+    *logout({ payload }, { put, call }) {
+      const { data } = yield call(usersService.logout, payload);
+      if (data) {
+        // 设置reducer
+        if (data.msg === "ok") {
+          // 退出成功
+          yield put({
+            type: 'signout',
+          });
+        }
+      }
     },
     *throwError() {
       throw new Error('hi error');

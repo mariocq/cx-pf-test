@@ -13,3 +13,9 @@ export function setpassword(values) {
     body: JSON.stringify(values),
   });
 }
+export function logout(values) {
+  return request('/api/logout', {
+    method: 'POST',
+    body: JSON.stringify(values),
+  });
+}
