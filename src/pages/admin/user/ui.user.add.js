@@ -63,9 +63,7 @@ class AddUser extends Component {
             {getFieldDecorator('usergroup', {
               rules: [{ required: true, message: '请选择用户组' }],
             })(
-              <Select
-                mode="multiple"
-              >
+              <Select>
                 <Option key={1} value="1">管理员</Option>
                 <Option key={2} value="2">质检员</Option>
               </Select>

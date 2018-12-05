@@ -1,9 +1,9 @@
-import { Avatar, Card, Popconfirm, Table, Modal, Button } from 'antd';
+import { Tag, Card, Popconfirm, Table, Modal, Button } from 'antd';
 import { connect } from 'dva';
 import moment from 'moment';
 import styles from './index.less';
-import AddUser from './ui.user.add';
-import EditUser from './ui.user.edit';
+import AddGroup from './ui.group.add';
+import EditGroup from './ui.group.edit';
 import router from 'umi/router';
 
 
@@ -65,55 +65,58 @@ const data = [{
 }
 ];
 
-class AdminUser extends React.Component {
+class AdminGroup extends React.Component {
   constructor(props) {
     super(props);
-    this.handleEditUserOpen = this.handleEditUserOpen.bind(this);
+    this.handleEditGroupOpen = this.handleEditGroupOpen.bind(this);
   }
   state = {
-    visibleAddUserModal: false,
-    visibleEditUserModal: false,
-    recordEditUserModal: null,
+    visibleAddGroupModal: false,
+    visibleEditGroupModal: false,
+    recordEditGroupModal: null,
   }
 
-  handleEditUserOpen(record) {
-    this.setState({ visibleEditUserModal: true, recordEditUserModal: record })
+  handleEditGroupOpen(record) {
+    this.setState({ visibleEditGroupModal: true, recordEditGroupModal: record })
   }
-  handleEditUserSubmit(oldPassword, newPassword) {
+  handleEditGroupSubmit(oldPassword, newPassword) {
     const { token } = this.props;
-    this.setState({ visibleEditUserModal: false, recordEditUserModal: null })
+    this.setState({ visibleEditGroupModal: false, recordEditGroupModal: null })
   }
-  handleEditUserCancel() {
-    this.setState({ visibleEditUserModal: false, recordEditUserModal: null })
-  }
-
-  handleAddUserOpen() {
-    this.setState({ visibleAddUserModal: true })
+  handleEditGroupCancel() {
+    this.setState({ visibleEditGroupModal: false, recordEditGroupModal: null })
   }
 
-  handleAddUserSubmit(oldPassword, newPassword) {
+  handleAddGroupOpen() {
+    this.setState({ visibleAddGroupModal: true })
+  }
+
+  handleAddGroupSubmit(oldPassword, newPassword) {
     const { token } = this.props;
-    this.setState({ visibleAddUserModal: false })
+    this.setState({ visibleAddGroupModal: false })
   }
-  handleAddUserCancel() {
-    this.setState({ visibleAddUserModal: false })
+  handleAddGroupCancel() {
+    this.setState({ visibleAddGroupModal: false })
   }
   render() {
     const columns = [{
-      title: '登录ID',
-      dataIndex: 'id',
+      title: '用户组',
+      dataIndex: 'name',
       width: 150
     }, {
-      title: '用户名',
-      dataIndex: 'name',
-    }, {
-      title: '用户组',
-      dataIndex: 'action',
-    }, {
-      title: '上次登录时间',
+      title: '权限列表',
       dataIndex: 'time',
       className: 'text-gray',
-      width: 230
+      render: (record) => {
+        return (
+          <div>
+            <Tag>实时窗口</Tag>
+            <Tag>图片查询</Tag>
+            <Tag>用户管理</Tag>
+            <Tag>用户组管理</Tag>
+          </div>
+        )
+      }
     }, {
       title: '操作',
       className: 'text-center',
@@ -121,8 +124,8 @@ class AdminUser extends React.Component {
       render: (record) => {
         return (
           <div className={styles.btnWrap}>
-            <Button icon="solution" onClick={() => this.handleEditUserOpen(record)}>编辑</Button>
-            <Popconfirm title="你确认删除该用户吗？" okText="删除" cancelText="取消">
+            <Button icon="solution" onClick={() => this.handleEditGroupOpen(record)}>编辑</Button>
+            <Popconfirm title="你确认删除该用户组吗？" okText="删除" cancelText="取消">
               <Button type="danger" icon="delete">删除</Button>
             </Popconfirm>
           </div>
@@ -133,36 +136,37 @@ class AdminUser extends React.Component {
     return (
       <div className={styles.normal}>
         <Card
-          title="用户管理"
+          title="用户组管理"
           extra={
             <div>
-              <Button icon="setting" style={{ marginRight: 15 }} onClick={() => router.push('/admin/group')}>管理用户组</Button>
-              <Button icon="plus-circle" type="primary" onClick={this.handleAddUserOpen.bind(this)}>添加新用户</Button>
-            </div>}
+              <Button icon="plus-circle" type="primary" style={{ marginRight: 15 }} onClick={this.handleAddGroupOpen.bind(this)}>添加用户组</Button>
+              <Button icon="arrow-left" onClick={() => router.goBack()}>返回</Button>
+            </div>
+          }
         >
           <Table
             size="small"
             rowKey="name"
             columns={columns}
             dataSource={data}
-            pagination={{ defaultPageSize: 12 }}
+            pagination={{ defaultPageSize: 11 }}
           />
         </Card>
 
         {/* 新增弹窗 */}
-        <AddUser
-          visibleAddUserModal={this.state.visibleAddUserModal}
-          handleAddUserSubmit={this.handleAddUserSubmit.bind(this)}
-          handleAddUserCancel={this.handleAddUserCancel.bind(this)}
+        <AddGroup
+          visibleAddGroupModal={this.state.visibleAddGroupModal}
+          handleAddGroupSubmit={this.handleAddGroupSubmit.bind(this)}
+          handleAddGroupCancel={this.handleAddGroupCancel.bind(this)}
           confirmLoading={false}
         />
 
         {/* 编辑弹窗 */}
-        <EditUser
-          visibleEditUserModal={this.state.visibleEditUserModal}
-          handleEditUserSubmit={this.handleEditUserSubmit.bind(this)}
-          handleEditUserCancel={this.handleEditUserCancel.bind(this)}
-          record={this.state.recordEditUserModal}
+        <EditGroup
+          visibleEditGroupModal={this.state.visibleEditGroupModal}
+          handleEditGroupSubmit={this.handleEditGroupSubmit.bind(this)}
+          handleEditGroupCancel={this.handleEditGroupCancel.bind(this)}
+          record={this.state.recordEditGroupModal}
           confirmLoading={false}
         />
       </div>
@@ -177,4 +181,4 @@ function mapStateToProps(state) {
     token,
   };
 }
-export default connect(mapStateToProps)(AdminUser)
+export default connect(mapStateToProps)(AdminGroup)
