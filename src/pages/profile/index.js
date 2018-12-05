@@ -106,7 +106,7 @@ class Profile extends React.Component {
     this.setState({ visiblePasswordModal: false })
   }
   render() {
-    const { profile } = this.props;
+    const { profile, id } = this.props;
     const { name, group, lastLoginTime } = profile;
     const time = moment(lastLoginTime).format("YYYY-MM-DD HH:mm");
 
@@ -123,6 +123,12 @@ class Profile extends React.Component {
               {name}
             </div>
             <div className={styles.info}>
+              <div className={styles.group}>
+                <Icon type="user" />登录ID：{id}
+              </div>
+              <div className={styles.group}>
+                <Icon type="contacts" />用户名：{name}
+              </div>
               <div className={styles.group}>
                 <Icon type="team" />用户组：{group}
               </div>
@@ -168,10 +174,11 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { token, profile } = state.global;
+  const { token, profile, id } = state.global;
   return {
     profile,
     token,
+    id,
   };
 }
 export default connect(mapStateToProps)(Profile)
