@@ -11,11 +11,12 @@ class ImageCanvas extends React.Component {
     image: new window.Image(),
     canvasWidth: 0,
     canvasHeight: 0,
+    isCalced: false, // 是否计算完成
   }
 
   componentWillMount() {
     // 等待Dom构建，计算初始化大小
-    this.timer = setTimeout(() => {
+    this.timer = setInterval(() => {
       this.calcWidth();
     }, 100);
 
@@ -49,7 +50,11 @@ class ImageCanvas extends React.Component {
     if (image) {
       image.onload = () => { };
     }
-    this.timer = clearTimeout(this.timer);
+
+    // 确保timer删除
+    if (this.timer) {
+      this.timer = clearInterval(this.timer);
+    }
   }
 
   /**
@@ -76,7 +81,15 @@ class ImageCanvas extends React.Component {
     // 获取数据尺寸
     const { data } = this.props;
     const { imgSizeWidth, imgSizeHeight } = data;
-    console.log(imgSizeWidth, imgSizeHeight);
+
+    // 如果已经没有数据，或者已经计算过，则退出
+    if (!imgSizeWidth || this.state.isCalced) {
+      return;
+    }
+
+    // 清除定时器
+    this.timer = clearInterval(this.timer);
+    this.setState({ isCalced: true });
 
     // 计算显示尺寸
     const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;
