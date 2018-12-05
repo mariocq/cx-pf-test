@@ -1,5 +1,6 @@
-import { Form, Icon, Input, Modal } from 'antd';
+import { Form, Icon, Input, Modal, Checkbox } from 'antd';
 import React, { Component } from 'react';
+const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
 
 class EditGroup extends Component {
@@ -22,9 +23,15 @@ class EditGroup extends Component {
     const { record } = this.props;
     const { id, name, pwd } = record || {};
 
+    const options = [
+      { label: '实时窗口', value: '/api/real-time-image' },
+      { label: '图片查询', value: '/api/history' },
+      { label: '用户列表', value: '/api/user/all' },
+      { label: '用户组列表', value: '/api/usergroup/all' },
+    ];
     return (
       <Modal
-        title="编辑用户"
+        title="编辑用户组"
         visible={this.props.visibleEditGroupModal}
         onOk={this.handleSubmit.bind(this)}
         confirmLoading={this.props.confirmLoading}
