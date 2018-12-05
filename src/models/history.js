@@ -18,6 +18,12 @@ export default {
         detail: payload
       };
     },
+    clearDetail(state, { }) {
+      return {
+        ...state,
+        detail: false
+      };
+    },
   },
   effects: {
     *fetch({ payload }, { put, call }) {
@@ -39,6 +45,12 @@ export default {
           payload: data,
         });
       }
+    },
+    *detailClear({ }, { put, }) {
+      // 设置reducer
+      yield put({
+        type: 'clearDetail',
+      });
     },
   },
 }

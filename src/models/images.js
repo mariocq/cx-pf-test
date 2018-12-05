@@ -13,6 +13,12 @@ export default {
         realtimeData: payload
       };
     },
+    clear(state, { }) {
+      return {
+        ...state,
+        realtimeData: false
+      };
+    },
     setHash(state, { payload }) {
       return {
         ...state,
@@ -31,12 +37,17 @@ export default {
         });
       }
     },
+    *realtimeClear({ payload }, { put, call }) {
+      yield put({
+        type: 'clear',
+      });
+    },
     *randomHash({ }, { put }) {
-        const code = StringUtils.GetHashCode();
-        yield put({
-          type: 'setHash',
-          payload: code,
-        });
+      const code = StringUtils.GetHashCode();
+      yield put({
+        type: 'setHash',
+        payload: code,
+      });
     },
   },
 }

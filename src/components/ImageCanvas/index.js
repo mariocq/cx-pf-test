@@ -72,9 +72,11 @@ class ImageCanvas extends React.Component {
    * 根据默认大小比例，计算显示尺寸
    */
   calcWidth() {
+
     // 获取数据尺寸
     const { data } = this.props;
     const { imgSizeWidth, imgSizeHeight } = data;
+    console.log(imgSizeWidth, imgSizeHeight);
 
     // 计算显示尺寸
     const canvasWidth = this.wrapNode.parentNode.parentNode.scrollWidth;

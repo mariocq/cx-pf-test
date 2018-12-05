@@ -22,6 +22,13 @@ class Detail extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    // 清除当前detail数据
+    this.props.dispatch({
+      type: 'history/detailClear'
+    });
+  }
+
   getBadgeCount(type) {
     if (type) {
       const { detail } = this.props;

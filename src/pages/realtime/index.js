@@ -27,6 +27,13 @@ class Component extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    // 清除当前realtime数据
+    this.props.dispatch({
+      type: 'images/realtimeClear'
+    });
+  }
+
   getBadgeCount(type) {
     if (type) {
       const { realtimeData } = this.props;
