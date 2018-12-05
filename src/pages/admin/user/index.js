@@ -135,7 +135,11 @@ class Admin extends React.Component {
       <div className={styles.normal}>
         <Card
           title="用户管理"
-          extra={<Button type="primary" onClick={this.handleAddUserOpen.bind(this)}>添加新用户</Button>}
+          extra={
+            <div>
+              <Button icon="setting" onClick={this.handleAddUserOpen.bind(this)} style={{marginRight: 15}}>管理用户组</Button>
+              <Button icon="plus-circle" type="primary" onClick={this.handleAddUserOpen.bind(this)}>添加新用户</Button>
+            </div>}
         >
           <Table
             rowKey="name"

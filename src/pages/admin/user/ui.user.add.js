@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, Icon, Input, Modal } from 'antd';
+import { Select, Form, Icon, Input, Modal } from 'antd';
 import styles from './index.less';
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 class AddUser extends Component {
   componentWillReceiveProps(nextProps) {
@@ -54,6 +55,20 @@ class AddUser extends Component {
               rules: [{ required: true, message: '请输入密码（不少于6位的数字和字母）', pattern: /^[a-zA-Z0-9]{6,100}$/ }],
             })(
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入密码" />
+            )}
+          </FormItem>
+          <FormItem
+            label="用户组"
+          >
+            {getFieldDecorator('usergroup', {
+              rules: [{ required: true, message: '请选择用户组' }],
+            })(
+              <Select
+                mode="multiple"
+              >
+                <Option key={1} value="1">管理员</Option>
+                <Option key={2} value="2">质检员</Option>
+              </Select>
             )}
           </FormItem>
         </Form>

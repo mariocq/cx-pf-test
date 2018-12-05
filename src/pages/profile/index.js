@@ -141,7 +141,7 @@ class Profile extends React.Component {
               {group === "管理员" ?
                 // 管理员可看到按钮
                 <div className={styles.btns}>
-                  <Icon type="solution" /><a href="javascript:;" onClick={() => router.push('/admin')}>用户管理</a>
+                  <Icon type="solution" /><a href="javascript:;" onClick={() => router.push('/admin/user')}>用户管理</a>
                 </div>
                 : ""
               }
