@@ -165,13 +165,11 @@ export default {
   // 修改密码
   // {token:"xxxxx", old: "xxx", new: "xxx"}
   'POST /api/setpassword': (req, res) => {
-    setTimeout(() => {
-      res.send(
-        // response
-        {
-          msg: "ok"
-        }
-      );
-    }, 1000);
-  },
+    res.send(
+      // response
+      {
+        msg: "ok"
+      }
+    );
+  }
 };
