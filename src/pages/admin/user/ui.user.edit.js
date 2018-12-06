@@ -17,8 +17,8 @@ class EditUser extends Component {
         const req = {
           "account": values.account,
           "info": {
-              "user_name": values.user_name,
-              "group_id": values.group_id
+            "user_name": values.user_name,
+            "group_id": values.group_id
           }
         }
         if (values.pwd) {
@@ -32,7 +32,25 @@ class EditUser extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { record } = this.props;
-    const { account, user_name, group_id } = record || {};
+    const { account, user_name, group_name } = record || {};
+
+    const { groupList } = this.props;
+
+    let opts;
+    let group_id;
+
+    if (groupList && record) {
+      // 用户组信息
+      opts = groupList.map((item, index) => {
+        return (
+          <Option key={index} value={item.group_id}>{item.group_name}</Option>
+        )
+      })
+
+      // 获取用户组ID
+      group_id = groupList.find(item => item.group_name === group_name).group_id;
+    }
+
 
     return (
       <Modal
@@ -80,8 +98,7 @@ class EditUser extends Component {
               initialValue: group_id,
             })(
               <Select>
-                <Option key={1} value="1">管理员</Option>
-                <Option key={2} value="2">质检员</Option>
+                {opts}
               </Select>
             )}
           </FormItem>

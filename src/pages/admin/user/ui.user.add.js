@@ -18,7 +18,7 @@ class AddUser extends Component {
           "account": values.id,
           "password": values.pwd,
           "user_name": values.name,
-          "group_id": 1
+          "group_id": values.usergroup,
         }
         this.props.handleAddUserSubmit(req);
       }
@@ -26,6 +26,19 @@ class AddUser extends Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { groupList } = this.props;
+
+    let opts;
+
+    if (groupList) {
+      // 用户组信息
+      opts = groupList.map((item, index) => {
+        return (
+          <Option key={index} value={item.group_id}>{item.group_name}</Option>
+        )
+      })
+    }
+
     return (
       <Modal
         title="新增用户"
@@ -69,8 +82,7 @@ class AddUser extends Component {
               rules: [{ required: true, message: '请选择用户组' }],
             })(
               <Select>
-                <Option key={1} value="1">管理员</Option>
-                <Option key={2} value="2">质检员</Option>
+                {opts}
               </Select>
             )}
           </FormItem>

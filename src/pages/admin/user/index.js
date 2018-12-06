@@ -135,6 +135,7 @@ class AdminUser extends React.Component {
           visibleAddUserModal={this.state.visibleAddUserModal}
           handleAddUserSubmit={this.handleAddUserSubmit.bind(this)}
           handleAddUserCancel={this.handleAddUserCancel.bind(this)}
+          groupList={this.props.groupList}
           confirmLoading={false}
         />
 
@@ -144,6 +145,7 @@ class AdminUser extends React.Component {
           handleEditUserSubmit={this.handleEditUserSubmit.bind(this)}
           handleEditUserCancel={this.handleEditUserCancel.bind(this)}
           record={this.state.recordEditUserModal}
+          groupList={this.props.groupList}
           confirmLoading={false}
         />
       </div>
