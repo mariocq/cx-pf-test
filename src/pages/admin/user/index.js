@@ -19,9 +19,26 @@ class AdminUser extends React.Component {
   handleEditUserOpen(record) {
     this.setState({ visibleEditUserModal: true, recordEditUserModal: record })
   }
-  handleEditUserSubmit(oldPassword, newPassword) {
-    const { token } = this.props;
-    this.setState({ visibleEditUserModal: false, recordEditUserModal: null })
+  handleEditUserSubmit(req) {
+    this.props.dispatch({
+      type: 'adminUser/edit',
+      payload: req,
+      callback: (data) => {
+        this.setState({ visibleEditUserModal: false, recordEditUserModal: null })
+        if (data.msg === "ok") {
+          // 提示
+          Modal.success({
+            title: "提示信息",
+            content: "编辑用户成功！"
+          })
+
+          // 更新用户列表
+          this.props.dispatch({
+            type: 'adminUser/fetch'
+          });
+        }
+      },
+    })
   }
   handleEditUserCancel() {
     this.setState({ visibleEditUserModal: false, recordEditUserModal: null })
@@ -88,10 +105,10 @@ class AdminUser extends React.Component {
       }
     }];
 
-    const { list } = this.props;
+    const { userList } = this.props;
     let data = [];
-    if (list) {
-      data = list.users;
+    if (userList) {
+      data = userList.users;
     }
     return (
       <div className={styles.normal}>
@@ -135,11 +152,13 @@ class AdminUser extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { list } = state.adminUser;
+  const { list: userList } = state.adminUser;
+  const { list: groupList } = state.adminGroup;
   const loading = state.loading.effects["adminUser/fetch"];
 
   return {
-    list,
+    userList,
+    groupList,
     loading,
   };
 }

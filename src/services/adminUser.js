@@ -14,3 +14,10 @@ export function add(values) {
     body: JSON.stringify(values),
   });
 }
+
+export function edit(values) {
+  return request(IP.domain + '/api/user/update', {
+    method: 'POST',
+    body: JSON.stringify(values),
+  });
+}

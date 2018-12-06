@@ -5,10 +5,10 @@ export default {
     list: null,
   },
   reducers: {
-    updateList(state, { payload }) {
+    updateList(state, { payload: { groups } }) {
       return {
         ...state,
-        list: payload
+        list: groups
       };
     },
   },

@@ -14,15 +14,25 @@ class EditUser extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // this.props.handleEditUserSubmit();
-        console.log(values);
+        const req = {
+          "account": values.account,
+          "info": {
+              "user_name": values.user_name,
+              "group_id": values.group_id
+          }
+        }
+        if (values.pwd) {
+          req.info.user_pwd = values.pwd;
+        }
+        this.props.handleEditUserSubmit(req);
+
       }
     })
   }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { record } = this.props;
-    const { id, name, pwd } = record || {};
+    const { account, user_name, group_id } = record || {};
 
     return (
       <Modal
@@ -36,9 +46,9 @@ class EditUser extends Component {
           <FormItem
             label="登录ID"
           >
-            {getFieldDecorator('id', {
+            {getFieldDecorator('account', {
               rules: [{ required: true, message: '请输入用于登录的ID（5-16位数字和字母）', pattern: /^[a-zA-Z0-9]{5,16}$/ }],
-              initialValue: id
+              initialValue: account
             })(
               <Input readOnly={true} prefix={<Icon type="smile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入用于登录的ID" />
             )}
@@ -46,9 +56,9 @@ class EditUser extends Component {
           <FormItem
             label="用户名"
           >
-            {getFieldDecorator('name', {
+            {getFieldDecorator('user_name', {
               rules: [{ required: true, message: '请输入姓名' }],
-              initialValue: name
+              initialValue: user_name
             })(
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入姓名" />
             )}
@@ -57,8 +67,7 @@ class EditUser extends Component {
             label="密码"
           >
             {getFieldDecorator('pwd', {
-              rules: [{ required: true, message: '请输入密码（不少于6位的数字和字母）', pattern: /^[a-zA-Z0-9]{6,100}$/ }],
-              initialValue: pwd
+              rules: [{ required: false, message: '请输入密码（不少于6位的数字和字母）', pattern: /^[a-zA-Z0-9]{6,100}$/ }]
             })(
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入密码" />
             )}
@@ -66,8 +75,9 @@ class EditUser extends Component {
           <FormItem
             label="用户组"
           >
-            {getFieldDecorator('usergroup', {
+            {getFieldDecorator('group_id', {
               rules: [{ required: true, message: '请选择用户组' }],
+              initialValue: group_id,
             })(
               <Select>
                 <Option key={1} value="1">管理员</Option>
