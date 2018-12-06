@@ -1,69 +1,9 @@
 import { Avatar, Card, Popconfirm, Table, Modal, Button } from 'antd';
 import { connect } from 'dva';
-import moment from 'moment';
 import styles from './index.less';
 import AddUser from './ui.user.add';
 import EditUser from './ui.user.edit';
 import router from 'umi/router';
-
-
-const data = [{
-  id: 'John',
-  name: 'John Brown1',
-  time: "2018-12-03 15:28:10",
-  action: 'New York No. 1 Lake Park',
-}, {
-  id: 'Jim Green2',
-  name: 'Jim Green2',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  id: 'Joe Black3',
-  name: 'Joe Black3',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green4',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black5',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green6',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black7',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green8',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black9',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green10',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black11',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green12',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black13',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}
-];
 
 class AdminUser extends React.Component {
   constructor(props) {
@@ -91,8 +31,26 @@ class AdminUser extends React.Component {
     this.setState({ visibleAddUserModal: true })
   }
 
-  handleAddUserSubmit(oldPassword, newPassword) {
-    const { token } = this.props;
+  handleAddUserSubmit(req) {
+    this.props.dispatch({
+      type: 'adminUser/add',
+      payload: req,
+      callback: (data) => {
+        this.setState({ visiblePasswordModal: false })
+        if (data.msg === "ok") {
+          // 提示
+          Modal.success({
+            title: "提示信息",
+            content: "添加用户成功！"
+          })
+
+          // 更新用户列表
+          this.props.dispatch({
+            type: 'adminUser/fetch'
+          });
+        }
+      },
+    })
     this.setState({ visibleAddUserModal: false })
   }
   handleAddUserCancel() {
@@ -101,17 +59,17 @@ class AdminUser extends React.Component {
   render() {
     const columns = [{
       title: '登录ID',
-      dataIndex: 'id',
+      dataIndex: 'account',
       width: 150
     }, {
       title: '用户名',
-      dataIndex: 'name',
+      dataIndex: 'user_name',
     }, {
       title: '用户组',
-      dataIndex: 'action',
+      dataIndex: 'group_name',
     }, {
       title: '上次登录时间',
-      dataIndex: 'time',
+      dataIndex: 'last_login_time',
       className: 'text-gray',
       width: 230
     }, {
@@ -130,6 +88,11 @@ class AdminUser extends React.Component {
       }
     }];
 
+    const { list } = this.props;
+    let data = [];
+    if (list) {
+      data = list.users;
+    }
     return (
       <div className={styles.normal}>
         <Card
@@ -142,7 +105,8 @@ class AdminUser extends React.Component {
         >
           <Table
             size="small"
-            rowKey="name"
+            rowKey="id"
+            loading={this.props.loading}
             columns={columns}
             dataSource={data}
             pagination={{ defaultPageSize: 12 }}
@@ -171,10 +135,12 @@ class AdminUser extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { token, profile } = state.global;
+  const { list } = state.adminUser;
+  const loading = state.loading.effects["adminUser/fetch"];
+
   return {
-    profile,
-    token,
+    list,
+    loading,
   };
 }
 export default connect(mapStateToProps)(AdminUser)

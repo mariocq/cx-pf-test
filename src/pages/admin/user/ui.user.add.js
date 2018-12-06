@@ -14,8 +14,13 @@ class AddUser extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // this.props.handleAddUserSubmit();
-        console.log(values);
+        const req = {
+          "account": values.id,
+          "password": values.pwd,
+          "user_name": values.name,
+          "group_id": 1
+        }
+        this.props.handleAddUserSubmit(req);
       }
     })
   }
