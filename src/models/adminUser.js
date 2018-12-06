@@ -18,13 +18,10 @@ export default {
       const token = yield select(state => state.global.token);
       payload.token = token;
       const { data } = yield call(adminUserService.fetch, payload);
-      if (data.msg === "ok") {
-        // 设置reducer
-        yield put({
-          type: 'updateList',
-          payload: data,
-        });
-      }
+      yield put({
+        type: 'updateList',
+        payload: data,
+      });
     },
     *add({ payload, callback }, { put, call, select }) {
       const token = yield select(state => state.global.token);
