@@ -1,4 +1,4 @@
-import { Button, Card, Popconfirm, Table, Tag } from 'antd';
+import { Button, Card, Popconfirm, Table, Tag, Modal } from 'antd';
 import { connect } from 'dva';
 import router from 'umi/router';
 import styles from './index.less';
@@ -19,9 +19,26 @@ class AdminGroup extends React.Component {
   handleEditGroupOpen(record) {
     this.setState({ visibleEditGroupModal: true, recordEditGroupModal: record })
   }
-  handleEditGroupSubmit(oldPassword, newPassword) {
-    const { token } = this.props;
-    this.setState({ visibleEditGroupModal: false, recordEditGroupModal: null })
+  handleEditGroupSubmit(req) {
+    this.props.dispatch({
+      type: 'adminGroup/edit',
+      payload: req,
+      callback: (data) => {
+        this.setState({ visibleEditGroupModal: false, recordEditGroupModal: null })
+        if (data.msg === "ok") {
+          // 提示
+          Modal.success({
+            title: "提示信息",
+            content: "修改用户组成功！"
+          })
+
+          // 更新列表
+          this.props.dispatch({
+            type: 'adminGroup/fetch'
+          });
+        }
+      },
+    })
   }
   handleEditGroupCancel() {
     this.setState({ visibleEditGroupModal: false, recordEditGroupModal: null })
@@ -31,13 +48,53 @@ class AdminGroup extends React.Component {
     this.setState({ visibleAddGroupModal: true })
   }
 
-  handleAddGroupSubmit(oldPassword, newPassword) {
-    const { token } = this.props;
-    this.setState({ visibleAddGroupModal: false })
+  handleAddGroupSubmit(req) {
+    this.props.dispatch({
+      type: 'adminGroup/add',
+      payload: req,
+      callback: (data) => {
+        this.setState({ visibleAddGroupModal: false })
+        if (data.msg === "ok") {
+          // 提示
+          Modal.success({
+            title: "提示信息",
+            content: "添加用户组成功！"
+          })
+
+          // 更新列表
+          this.props.dispatch({
+            type: 'adminGroup/fetch'
+          });
+        }
+      },
+    })
   }
   handleAddGroupCancel() {
     this.setState({ visibleAddGroupModal: false })
   }
+
+  handleDeleteGroupSubmit(group_id) {
+    this.props.dispatch({
+      type: 'adminGroup/delete',
+      payload: { group_id },
+      callback: (data) => {
+        if (data.msg === "ok") {
+          // 提示
+          Modal.success({
+            title: "提示信息",
+            content: "删除用户组成功！"
+          })
+
+          // 更新用户列表
+          this.props.dispatch({
+            type: 'adminGroup/fetch'
+          });
+        }
+      },
+    })
+    this.setState({ visibleAddUserModal: false })
+  }
+
   render() {
     const columns = [{
       title: '用户组ID',
@@ -65,7 +122,7 @@ class AdminGroup extends React.Component {
         return (
           <div className={styles.btnWrap}>
             <Button icon="solution" onClick={() => this.handleEditGroupOpen(record)}>编辑</Button>
-            <Popconfirm title="你确认删除该用户组吗？" okText="删除" cancelText="取消">
+            <Popconfirm title="你确认删除该用户组吗？" okText="删除" cancelText="取消" onConfirm={() => this.handleDeleteGroupSubmit(record.group_id)}>
               <Button type="danger" icon="delete">删除</Button>
             </Popconfirm>
           </div>
@@ -73,7 +130,7 @@ class AdminGroup extends React.Component {
       }
     }];
 
-    const { groupList: data } = this.props;
+    const { groupList: data, rights } = this.props;
 
     return (
       <div className={styles.normal}>
@@ -101,6 +158,7 @@ class AdminGroup extends React.Component {
           handleAddGroupSubmit={this.handleAddGroupSubmit.bind(this)}
           handleAddGroupCancel={this.handleAddGroupCancel.bind(this)}
           confirmLoading={false}
+          rights={rights}
         />
 
         {/* 编辑弹窗 */}
@@ -110,6 +168,7 @@ class AdminGroup extends React.Component {
           handleEditGroupCancel={this.handleEditGroupCancel.bind(this)}
           record={this.state.recordEditGroupModal}
           confirmLoading={false}
+          rights={rights}
         />
       </div>
     );
@@ -117,9 +176,10 @@ class AdminGroup extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { list: groupList } = state.adminGroup;
+  const { list: groupList, rights } = state.adminGroup;
   return {
     groupList,
+    rights,
   };
 }
 export default connect(mapStateToProps)(AdminGroup)

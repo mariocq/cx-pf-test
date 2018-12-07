@@ -3,12 +3,19 @@ import * as adminGroupService from '../services/adminGroup';
 export default {
   state: {
     list: null,
+    rights: [],
   },
   reducers: {
     updateList(state, { payload: { groups } }) {
       return {
         ...state,
         list: groups
+      };
+    },
+    updateRights(state, { payload: { rights } }) {
+      return {
+        ...state,
+        rights
       };
     },
   },
@@ -25,6 +32,36 @@ export default {
         });
       }
     },
+    *add({ payload, callback }, { put, call, select }) {
+      const token = yield select(state => state.global.token);
+      payload.token = token;
+      const { data } = yield call(adminGroupService.add, payload);
+      callback(data);
+    },
+    *edit({ payload, callback }, { put, call, select }) {
+      const token = yield select(state => state.global.token);
+      payload.token = token;
+      const { data } = yield call(adminGroupService.edit, payload);
+      callback(data);
+    },
+    *delete({ payload, callback }, { put, call, select }) {
+      const token = yield select(state => state.global.token);
+      payload.token = token;
+      const { data } = yield call(adminGroupService.del, payload);
+      callback(data);
+    },
+    *getRights({ payload = {} }, { put, call, select }) {
+      const token = yield select(state => state.global.token);
+      payload.token = token;
+      const { data } = yield call(adminGroupService.getRights, payload);
+      if (data.msg === "ok") {
+        // 设置reducer
+        yield put({
+          type: 'updateRights',
+          payload: data,
+        });
+      }
+    },
   },
   subscriptions: {
     setup({ history, dispatch }) {
@@ -32,6 +69,9 @@ export default {
         if (pathname === '/admin/group') {
           dispatch({
             type: 'fetch'
+          });
+          dispatch({
+            type: 'getRights'
           });
         }
       });

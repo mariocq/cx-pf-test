@@ -53,7 +53,6 @@ class AdminUser extends React.Component {
       type: 'adminUser/add',
       payload: req,
       callback: (data) => {
-        this.setState({ visiblePasswordModal: false })
         if (data.msg === "ok") {
           // 提示
           Modal.success({
@@ -78,7 +77,6 @@ class AdminUser extends React.Component {
       type: 'adminUser/delete',
       payload: { account },
       callback: (data) => {
-        this.setState({ visiblePasswordModal: false })
         if (data.msg === "ok") {
           // 提示
           Modal.success({

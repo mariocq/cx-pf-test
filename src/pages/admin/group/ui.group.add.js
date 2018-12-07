@@ -1,4 +1,4 @@
-import { Checkbox, Form, Icon, Input, Modal } from 'antd';
+import { Checkbox, Form, Icon, Input, Modal, Row, Col } from 'antd';
 import React, { Component } from 'react';
 
 const CheckboxGroup = Checkbox.Group;
@@ -14,19 +14,26 @@ class AddGroup extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // this.props.handleAddGroupSubmit();
-        console.log(values);
+        // 拼装请求
+        const req = {
+          "group_name": values.group_name,
+          "rights": values.rights
+        }
+        this.props.handleAddGroupSubmit(req);
       }
     })
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const options = [
-      { label: '实时窗口', value: '/api/real-time-image' },
-      { label: '图片查询', value: '/api/history' },
-      { label: '用户列表', value: '/api/user/all' },
-      { label: '用户组列表', value: '/api/usergroup/all' },
-    ];
+    const { rights = [] } = this.props;
+    const cols = rights.map((item, index) => {
+      return (
+        <Col span={8} key={index}>
+          <Checkbox title={item.api} value={item.id}>{item.description}</Checkbox>
+        </Col>
+      )
+    })
+
     return (
       <Modal
         title="新增用户组"
@@ -39,20 +46,23 @@ class AddGroup extends Component {
           <FormItem
             label="用户组名称"
           >
-            {getFieldDecorator('name', {
-              rules: [{ required: true, message: '请输入姓名' }],
+            {getFieldDecorator('group_name', {
+              rules: [{ required: true, message: '请输入名称' }]
             })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入姓名" />
+              <Input prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入名称" />
             )}
           </FormItem>
           <FormItem
-            label="用户组"
+            label="用户组权限"
           >
-            {getFieldDecorator('usergroup', {
-              rules: [{ required: true, message: '请选择用户组' }],
-              initialValue: ["1", "2"]
+            {getFieldDecorator('rights', {
+              rules: [{ required: true, message: '请选择权限' }]
             })(
-              <CheckboxGroup options={options} />
+              <CheckboxGroup>
+                <Row>
+                  {cols}
+                </Row>
+              </CheckboxGroup>
             )}
           </FormItem>
         </Form>

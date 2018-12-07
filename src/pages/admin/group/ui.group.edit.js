@@ -1,4 +1,4 @@
-import { Form, Icon, Input, Modal, Checkbox } from 'antd';
+import { Checkbox, Form, Icon, Input, Modal, Row, Col } from 'antd';
 import React, { Component } from 'react';
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
@@ -13,22 +13,34 @@ class EditGroup extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // this.props.handleEditGroupSubmit();
-        console.log(values);
+        // 拼装请求
+        const req = {
+          "group_id": values.group_id,
+          "data": {
+            "group_name": values.group_name,
+            "rights": values.rights
+          },
+        }
+        this.props.handleEditGroupSubmit(req);
       }
     })
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    // 获取数据
     const { record } = this.props;
-    const { id, name, pwd } = record || {};
+    const { group_id, group_name, rights: rightslist = [] } = record || {};
+    const currights = rightslist.map(item => item.right_id);
 
-    const options = [
-      { label: '实时窗口', value: '/api/real-time-image' },
-      { label: '图片查询', value: '/api/history' },
-      { label: '用户列表', value: '/api/user/all' },
-      { label: '用户组列表', value: '/api/usergroup/all' },
-    ];
+    // 权限列表初始化
+    const { rights = [] } = this.props;
+    const cols = rights.map((item, index) => {
+      return (
+        <Col span={8} key={index}>
+          <Checkbox title={item.api} value={item.id}>{item.description}</Checkbox>
+        </Col>
+      )
+    })
     return (
       <Modal
         title="编辑用户组"
@@ -38,24 +50,37 @@ class EditGroup extends Component {
         onCancel={this.props.handleEditGroupCancel}
       >
         <Form onSubmit={this.handleSubmit} >
-          <FormItem
-            label="登录ID"
-          >
-            {getFieldDecorator('id', {
-              rules: [{ required: true, message: '请输入用于登录的ID（5-16位数字和字母）', pattern: /^[a-zA-Z0-9]{5,16}$/ }],
-              initialValue: id
+          <FormItem style={{ display: "none" }}>
+            {getFieldDecorator('group_id', {
+              initialValue: group_id
             })(
-              <Input readOnly={true} prefix={<Icon type="smile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入用于登录的ID" />
+              <Input type="hidden" />
             )}
           </FormItem>
+
           <FormItem
-            label="用户组"
+            label="用户组名称"
           >
-            {getFieldDecorator('usergroup', {
-              rules: [{ required: true, message: '请选择用户组' }],
-              initialValue: ["1", "2"]
+            {getFieldDecorator('group_name', {
+              rules: [{ required: true, message: '请输入名称' }],
+              initialValue: group_name
             })(
-              <CheckboxGroup options={options} />
+              <Input prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入名称" />
+            )}
+          </FormItem>
+
+          <FormItem
+            label="用户组权限"
+          >
+            {getFieldDecorator('rights', {
+              rules: [{ required: true, message: '请选择权限' }],
+              initialValue: currights
+            })(
+              <CheckboxGroup>
+                <Row>
+                  {cols}
+                </Row>
+              </CheckboxGroup>
             )}
           </FormItem>
         </Form>
