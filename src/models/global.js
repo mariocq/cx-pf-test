@@ -33,6 +33,7 @@ export default {
         token: "",
         id: "",
         profile: {},
+        record: null,
       };
     },
     updateRecord(state, { payload: { records } }) {

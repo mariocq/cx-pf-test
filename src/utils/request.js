@@ -1,4 +1,6 @@
 import fetch from 'dva/fetch';
+import { Modal } from 'antd';
+import router from 'umi/router';
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -28,6 +30,20 @@ export default async function request(url, options) {
     data,
     headers: {},
   };
-
-  return ret;
+  if (data.msg !== "ok") {
+    Modal.error({
+      title: "错误",
+      content: data.msg,
+    })
+  } else if (data.msg === "token is invalid or expired") {
+    Modal.error({
+      title: "错误",
+      content: "登录超时，请重新登录",
+      onOk: ()=>{
+        router.push("/login");
+      }
+    })
+  } else {
+    return ret;
+  }
 }

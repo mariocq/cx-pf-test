@@ -99,7 +99,7 @@ class AdminGroup extends React.Component {
     const columns = [{
       title: '用户组ID',
       dataIndex: 'group_id',
-      width: 50
+      width: 100
     }, {
       title: '用户组名称',
       dataIndex: 'group_name',
