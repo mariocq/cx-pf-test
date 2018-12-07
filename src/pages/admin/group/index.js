@@ -1,69 +1,9 @@
-import { Tag, Card, Popconfirm, Table, Modal, Button } from 'antd';
+import { Button, Card, Popconfirm, Table, Tag } from 'antd';
 import { connect } from 'dva';
-import moment from 'moment';
+import router from 'umi/router';
 import styles from './index.less';
 import AddGroup from './ui.group.add';
 import EditGroup from './ui.group.edit';
-import router from 'umi/router';
-
-
-const data = [{
-  id: 'John',
-  name: 'John Brown1',
-  time: "2018-12-03 15:28:10",
-  action: 'New York No. 1 Lake Park',
-}, {
-  id: 'Jim Green2',
-  name: 'Jim Green2',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  id: 'Joe Black3',
-  name: 'Joe Black3',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green4',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black5',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green6',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black7',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green8',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black9',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green10',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black11',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green12',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black13',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}
-];
 
 class AdminGroup extends React.Component {
   constructor(props) {
@@ -100,22 +40,22 @@ class AdminGroup extends React.Component {
   }
   render() {
     const columns = [{
-      title: '用户组',
-      dataIndex: 'name',
+      title: '用户组ID',
+      dataIndex: 'group_id',
+      width: 50
+    }, {
+      title: '用户组名称',
+      dataIndex: 'group_name',
       width: 150
     }, {
       title: '权限列表',
-      dataIndex: 'time',
       className: 'text-gray',
       render: (record) => {
-        return (
-          <div>
-            <Tag>实时窗口</Tag>
-            <Tag>图片查询</Tag>
-            <Tag>用户管理</Tag>
-            <Tag>用户组管理</Tag>
-          </div>
-        )
+        const { rights = [] } = record;
+        const tags = rights.map((item, index) => {
+          return <Tag key={index} title={item.api}>{item.desc}</Tag>
+        })
+        return tags;
       }
     }, {
       title: '操作',
@@ -133,6 +73,8 @@ class AdminGroup extends React.Component {
       }
     }];
 
+    const { groupList: data } = this.props;
+
     return (
       <div className={styles.normal}>
         <Card
@@ -146,7 +88,7 @@ class AdminGroup extends React.Component {
         >
           <Table
             size="small"
-            rowKey="name"
+            rowKey="group_id"
             columns={columns}
             dataSource={data}
             pagination={{ defaultPageSize: 11 }}
@@ -175,10 +117,9 @@ class AdminGroup extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { token, profile } = state.global;
+  const { list: groupList } = state.adminGroup;
   return {
-    profile,
-    token,
+    groupList,
   };
 }
 export default connect(mapStateToProps)(AdminGroup)
