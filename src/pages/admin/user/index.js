@@ -73,6 +73,28 @@ class AdminUser extends React.Component {
   handleAddUserCancel() {
     this.setState({ visibleAddUserModal: false })
   }
+  handleDeleteUserSubmit(account) {
+    this.props.dispatch({
+      type: 'adminUser/delete',
+      payload: { account },
+      callback: (data) => {
+        this.setState({ visiblePasswordModal: false })
+        if (data.msg === "ok") {
+          // 提示
+          Modal.success({
+            title: "提示信息",
+            content: "删除用户成功！"
+          })
+
+          // 更新用户列表
+          this.props.dispatch({
+            type: 'adminUser/fetch'
+          });
+        }
+      },
+    })
+    this.setState({ visibleAddUserModal: false })
+  }
   render() {
     const columns = [{
       title: '登录ID',
@@ -97,7 +119,7 @@ class AdminUser extends React.Component {
         return (
           <div className={styles.btnWrap}>
             <Button icon="solution" onClick={() => this.handleEditUserOpen(record)}>编辑</Button>
-            <Popconfirm title="你确认删除该用户吗？" okText="删除" cancelText="取消">
+            <Popconfirm title="你确认删除该用户吗？" okText="删除" cancelText="取消" onConfirm={() => this.handleDeleteUserSubmit(record.account)}>
               <Button type="danger" icon="delete">删除</Button>
             </Popconfirm>
           </div>

@@ -21,3 +21,10 @@ export function edit(values) {
     body: JSON.stringify(values),
   });
 }
+
+export function del(values) {
+  return request(IP.domain + '/api/user/delete', {
+    method: 'POST',
+    body: JSON.stringify(values),
+  });
+}

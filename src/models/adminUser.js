@@ -35,6 +35,12 @@ export default {
       const { data } = yield call(adminUserService.edit, payload);
       callback(data);
     },
+    *delete({ payload, callback }, { put, call, select }) {
+      const token = yield select(state => state.global.token);
+      payload.token = token;
+      const { data } = yield call(adminUserService.del, payload);
+      callback(data);
+    },
   },
   subscriptions: {
     setup({ history, dispatch }) {
