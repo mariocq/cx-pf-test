@@ -5,73 +5,6 @@ import styles from './index.less';
 import SetPassword from './ui.set.password';
 import router from 'umi/router';
 
-const columns = [{
-  title: '时间',
-  dataIndex: 'time',
-  width: 230
-}, {
-  title: '用户',
-  dataIndex: 'name',
-  width: 200
-}, {
-  title: '操作',
-  dataIndex: 'action',
-}];
-const data = [{
-  name: 'John Brown1',
-  time: "2018-12-03 15:28:10",
-  action: 'New York No. 1 Lake Park',
-}, {
-  name: 'Jim Green2',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black3',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green4',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black5',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green6',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black7',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green8',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black9',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green10',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black11',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}, {
-  name: 'Jim Green12',
-  time: "2018-12-02 15:28:10",
-  action: 'London No. 1 Lake Park',
-}, {
-  name: 'Joe Black13',
-  time: "2018-12-01 15:28:10",
-  action: 'Sidney No. 1 Lake Park',
-}
-];
-
 class Profile extends React.Component {
   state = {
     visiblePasswordModal: false,
@@ -106,9 +39,23 @@ class Profile extends React.Component {
     this.setState({ visiblePasswordModal: false })
   }
   render() {
-    const { profile, id } = this.props;
+    const { profile, id, records = [] } = this.props;
     const { name, group, lastLoginTime } = profile;
     const time = moment(lastLoginTime).format("YYYY-MM-DD HH:mm");
+
+    const columns = [{
+      title: '时间',
+      dataIndex: 'op_time',
+      width: 230
+    }, {
+      title: '用户',
+      dataIndex: 'account',
+      width: 250
+    }, {
+      title: '登录IP',
+      dataIndex: 'remote_ip',
+    }];
+    const data = records;
 
     return (
       <div className={styles.normal}>
@@ -153,7 +100,7 @@ class Profile extends React.Component {
             title="操作日志"
           >
             <Table
-              rowKey="name"
+              rowKey="op_time"
               columns={columns}
               dataSource={data}
               pagination={{ defaultPageSize: 11 }}
@@ -174,11 +121,12 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { token, profile, id } = state.global;
+  const { token, profile, id, records } = state.global;
   return {
     profile,
     token,
     id,
+    records,
   };
 }
 export default connect(mapStateToProps)(Profile)

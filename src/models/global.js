@@ -7,6 +7,7 @@ export default {
     token: "",
     id: "",
     profile: {},
+    record: null,
   },
   reducers: {
     signerror(state, { payload: { msg } }) {
@@ -32,6 +33,12 @@ export default {
         token: "",
         id: "",
         profile: {},
+      };
+    },
+    updateRecord(state, { payload: { records } }) {
+      return {
+        ...state,
+        records,
       };
     },
   },
@@ -88,8 +95,31 @@ export default {
         }
       }
     },
+    *getRecord({ payload = {} }, { put, call, select }) {
+      const token = yield select(state => state.global.token);
+      const account = yield select(state => state.global.id);
+      payload.token = token;
+      payload.account = account;
+      const { data } = yield call(usersService.record, payload);
+      yield put({
+        type: 'updateRecord',
+        payload: data,
+      });
+    },
     *throwError() {
       throw new Error('hi error');
     },
   },
+  subscriptions: {
+    setup({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === '/profile') {
+          // 获取登录日志
+          dispatch({
+            type: 'getRecord'
+          });
+        }
+      });
+    },
+  }
 }
