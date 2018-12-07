@@ -1,10 +1,9 @@
-import { Icon, Layout, Menu, Modal } from 'antd';
-import styles from './index.less';
-import router from 'umi/router';
+import { Icon, Layout } from 'antd';
 import { connect } from 'dva';
-import LeftMenu from './menu';
 import withRouter from 'umi/withRouter';
-const { Header, Sider, Content } = Layout;
+import styles from './index.less';
+import LeftMenu from './menu';
+const { Header, Content } = Layout;
 
 class BasicLayout extends React.Component {
   state = {
@@ -33,15 +32,10 @@ class BasicLayout extends React.Component {
     return (
       <div className={styles.normal} id="components-layout-demo-custom-trigger">
         <Layout>
-          <Sider
-            trigger={null}
-            collapsible
+          {/* 登录状态由”退出“按钮组件控制 */}
+          <LeftMenu
             collapsed={this.state.collapsed}
-          >
-            <div className={styles.logo} />
-            {/* 登录状态由”退出“按钮组件控制 */}
-            <LeftMenu />
-          </Sider>
+          />
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }}>
               <Icon
