@@ -20,7 +20,8 @@ class LoginForm extends React.Component {
   componentDidUpdate() {
     const { login, msg } = this.props;
     if (login) {
-      router.push('/realtime');
+      // 根据权限判断入库
+      this.entryByAuth();
     }
     if (msg) {
       Modal.error({
@@ -32,6 +33,28 @@ class LoginForm extends React.Component {
       this.props.dispatch({
         type: 'global/clearmsg',
       })
+    }
+  }
+
+  entryByAuth() {
+    const { rights = [] } = this.props.profile;
+
+    // 实时图片权限
+    if (rights.filter(item => item.api === "/api/real-time-image").length > 0) {
+      router.push('/realtime');
+      return;
+    }
+
+    // 历史查询权限
+    if (rights.filter(item => item.api === "/api/history").length > 0) {
+      router.push('/history');
+      return;
+    }
+
+    // 个人信息权限
+    if (rights.filter(item => item.api === "/api/record/login").length > 0) {
+      router.push('/profile');
+      return;
     }
   }
 
@@ -70,9 +93,11 @@ class LoginForm extends React.Component {
 const WrappedLoginForm = Form.create()(LoginForm);
 function mapStateToProps(state) {
   const { login, msg } = state.global;
+  const { profile } = state.global;
   return {
     login,
     msg,
+    profile,
     loading: state.loading.models.global,
   };
 }
