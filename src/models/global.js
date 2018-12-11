@@ -84,6 +84,12 @@ export default {
         payload: { msg: "" },
       });
     },
+    *clearlogin({ }, { put }) {
+      // 超时退出
+      yield put({
+        type: 'signout',
+      });
+    },
     *logout({ payload }, { put, call }) {
       const { data } = yield call(usersService.logout, payload);
       if (data) {

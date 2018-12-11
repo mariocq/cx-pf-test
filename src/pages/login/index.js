@@ -17,6 +17,13 @@ class LoginForm extends React.Component {
     });
   }
 
+  componentDidMount() {
+    // 初始化时清空login状态
+    this.props.dispatch({
+      type: 'global/clearlogin',
+    })
+  }
+
   componentDidUpdate() {
     const { login, msg } = this.props;
     if (login) {
@@ -92,8 +99,7 @@ class LoginForm extends React.Component {
 
 const WrappedLoginForm = Form.create()(LoginForm);
 function mapStateToProps(state) {
-  const { login, msg } = state.global;
-  const { profile } = state.global;
+  const { login, msg, profile } = state.global;
   return {
     login,
     msg,
