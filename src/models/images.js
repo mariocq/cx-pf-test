@@ -29,13 +29,11 @@ export default {
   effects: {
     *realtime({ payload }, { put, call }) {
       const { data } = yield call(imagesService.realtime, payload);
-      if (data && data.msg === "ok") {
-        // 设置reducer
-        yield put({
-          type: 'update',
-          payload: data,
-        });
-      }
+      // 设置reducer
+      yield put({
+        type: 'update',
+        payload: data,
+      });
     },
     *realtimeClear({ payload }, { put, call }) {
       yield put({

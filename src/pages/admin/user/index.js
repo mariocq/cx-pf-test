@@ -25,18 +25,16 @@ class AdminUser extends React.Component {
       payload: req,
       callback: (data) => {
         this.setState({ visibleEditUserModal: false, recordEditUserModal: null })
-        if (data.msg === "ok") {
-          // 提示
-          Modal.success({
-            title: "提示信息",
-            content: "编辑用户成功！"
-          })
+        // 提示
+        Modal.success({
+          title: "提示信息",
+          content: "编辑用户成功！"
+        })
 
-          // 更新用户列表
-          this.props.dispatch({
-            type: 'adminUser/fetch'
-          });
-        }
+        // 更新用户列表
+        this.props.dispatch({
+          type: 'adminUser/fetch'
+        });
       },
     })
   }
@@ -53,18 +51,16 @@ class AdminUser extends React.Component {
       type: 'adminUser/add',
       payload: req,
       callback: (data) => {
-        if (data.msg === "ok") {
-          // 提示
-          Modal.success({
-            title: "提示信息",
-            content: "添加用户成功！"
-          })
+        // 提示
+        Modal.success({
+          title: "提示信息",
+          content: "添加用户成功！"
+        })
 
-          // 更新用户列表
-          this.props.dispatch({
-            type: 'adminUser/fetch'
-          });
-        }
+        // 更新用户列表
+        this.props.dispatch({
+          type: 'adminUser/fetch'
+        });
       },
     })
     this.setState({ visibleAddUserModal: false })
@@ -77,18 +73,16 @@ class AdminUser extends React.Component {
       type: 'adminUser/delete',
       payload: { account },
       callback: (data) => {
-        if (data.msg === "ok") {
-          // 提示
-          Modal.success({
-            title: "提示信息",
-            content: "删除用户成功！"
-          })
+        // 提示
+        Modal.success({
+          title: "提示信息",
+          content: "删除用户成功！"
+        })
 
-          // 更新用户列表
-          this.props.dispatch({
-            type: 'adminUser/fetch'
-          });
-        }
+        // 更新用户列表
+        this.props.dispatch({
+          type: 'adminUser/fetch'
+        });
       },
     })
     this.setState({ visibleAddUserModal: false })

@@ -24,13 +24,11 @@ export default {
       const token = yield select(state => state.global.token);
       payload.token = token;
       const { data } = yield call(adminGroupService.fetch, payload);
-      if (data.msg === "ok") {
-        // 设置reducer
-        yield put({
-          type: 'updateList',
-          payload: data,
-        });
-      }
+      // 设置reducer
+      yield put({
+        type: 'updateList',
+        payload: data,
+      });
     },
     *add({ payload, callback }, { put, call, select }) {
       const token = yield select(state => state.global.token);
@@ -54,13 +52,11 @@ export default {
       const token = yield select(state => state.global.token);
       payload.token = token;
       const { data } = yield call(adminGroupService.getRights, payload);
-      if (data.msg === "ok") {
-        // 设置reducer
-        yield put({
-          type: 'updateRights',
-          payload: data,
-        });
-      }
+      // 设置reducer
+      yield put({
+        type: 'updateRights',
+        payload: data,
+      });
     },
   },
   subscriptions: {

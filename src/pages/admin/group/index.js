@@ -25,18 +25,16 @@ class AdminGroup extends React.Component {
       payload: req,
       callback: (data) => {
         this.setState({ visibleEditGroupModal: false, recordEditGroupModal: null })
-        if (data.msg === "ok") {
-          // 提示
-          Modal.success({
-            title: "提示信息",
-            content: "修改用户组成功！"
-          })
+        // 提示
+        Modal.success({
+          title: "提示信息",
+          content: "修改用户组成功！"
+        })
 
-          // 更新列表
-          this.props.dispatch({
-            type: 'adminGroup/fetch'
-          });
-        }
+        // 更新列表
+        this.props.dispatch({
+          type: 'adminGroup/fetch'
+        });
       },
     })
   }
@@ -54,18 +52,16 @@ class AdminGroup extends React.Component {
       payload: req,
       callback: (data) => {
         this.setState({ visibleAddGroupModal: false })
-        if (data.msg === "ok") {
-          // 提示
-          Modal.success({
-            title: "提示信息",
-            content: "添加用户组成功！"
-          })
+        // 提示
+        Modal.success({
+          title: "提示信息",
+          content: "添加用户组成功！"
+        })
 
-          // 更新列表
-          this.props.dispatch({
-            type: 'adminGroup/fetch'
-          });
-        }
+        // 更新列表
+        this.props.dispatch({
+          type: 'adminGroup/fetch'
+        });
       },
     })
   }
@@ -78,18 +74,16 @@ class AdminGroup extends React.Component {
       type: 'adminGroup/delete',
       payload: { group_id },
       callback: (data) => {
-        if (data.msg === "ok") {
-          // 提示
-          Modal.success({
-            title: "提示信息",
-            content: "删除用户组成功！"
-          })
+        // 提示
+        Modal.success({
+          title: "提示信息",
+          content: "删除用户组成功！"
+        })
 
-          // 更新用户列表
-          this.props.dispatch({
-            type: 'adminGroup/fetch'
-          });
-        }
+        // 更新用户列表
+        this.props.dispatch({
+          type: 'adminGroup/fetch'
+        });
       },
     })
     this.setState({ visibleAddUserModal: false })

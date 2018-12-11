@@ -28,23 +28,19 @@ export default {
   effects: {
     *fetch({ payload }, { put, call }) {
       const { data } = yield call(historyService.fetch, payload);
-      if (data.msg === "ok") {
-        // 设置reducer
-        yield put({
-          type: 'updateList',
-          payload: data.history,
-        });
-      }
+      // 设置reducer
+      yield put({
+        type: 'updateList',
+        payload: data.history,
+      });
     },
     *detail({ payload }, { put, call }) {
       const { data } = yield call(historyService.detail, payload);
-      if (data.msg === "ok") {
-        // 设置reducer
-        yield put({
-          type: 'updateDetail',
-          payload: data,
-        });
-      }
+      // 设置reducer
+      yield put({
+        type: 'updateDetail',
+        payload: data,
+      });
     },
     *detailClear({ }, { put, }) {
       // 设置reducer
