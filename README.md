@@ -1,4 +1,4 @@
-# cx-pf-test
+# CX-pf-test
 
 ## 特性
 
