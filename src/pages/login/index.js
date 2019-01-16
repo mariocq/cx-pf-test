@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
     if (msg) {
       Modal.error({
         title: "登录失败",
-        content: "您输入用户名密码不匹配，请检查后再尝试",
+        content: "您输入用户名密码不匹配，请检查后再尝试！",
       })
 
       // clear msg
